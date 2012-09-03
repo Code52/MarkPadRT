@@ -1,12 +1,13 @@
 ﻿using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace MarkPad
 {
-    public sealed partial class App : Application
+    public sealed partial class App
     {
         public App()
         {
@@ -43,6 +44,11 @@ namespace MarkPad
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             deferral.Complete();
+        }
+
+        protected override void OnFileActivated(FileActivatedEventArgs args)
+        {
+            var file = args.Files[0] as StorageFile;
         }
     }
 }

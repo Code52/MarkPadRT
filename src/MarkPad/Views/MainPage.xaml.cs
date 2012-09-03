@@ -12,7 +12,7 @@ namespace MarkPad
         public MainPage()
         {
             InitializeComponent();
-            t.Interval = new TimeSpan(0,0,0,0,500);
+            t.Interval = new TimeSpan(0, 0, 0, 0, 500);
             t.Tick += t_Tick;
             wv.LoadCompleted += wv_LoadCompleted;
         }
@@ -27,7 +27,7 @@ namespace MarkPad
             t.Stop();
             string foo;
             tx.Document.GetText(TextGetOptions.None, out foo);
-            wv.NavigateToString(x.Transform(foo));
+            wv.NavigateToString(string.Format("<html><head><style>{0}</style></head><body>{1}</body></html>", css, x.Transform(foo)));
         }
 
         private void tx_TextChanged_2(object sender, RoutedEventArgs e)
@@ -35,5 +35,7 @@ namespace MarkPad
             t.Stop();
             t.Start();
         }
+
+        private string css = @"body { background : #eaeaea; font-family: Segoe UI, sans-serif; }";
     }
 }

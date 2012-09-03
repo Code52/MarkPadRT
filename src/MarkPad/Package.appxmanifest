@@ -19,6 +19,17 @@
         <DefaultTile ShowName="allLogos" />
         <SplashScreen Image="Assets\SplashScreen.png" />
       </VisualElements>
+      <Extensions>
+        <Extension Category="windows.fileTypeAssociation" EntryPoint="MarkPad.App">
+          <FileTypeAssociation Name="md">
+            <DisplayName>MarkDown</DisplayName>
+            <Logo>icon.png</Logo>
+            <SupportedFileTypes>
+              <FileType>.md</FileType>
+            </SupportedFileTypes>
+          </FileTypeAssociation>
+        </Extension>
+      </Extensions>
     </Application>
   </Applications>
   <Capabilities>
