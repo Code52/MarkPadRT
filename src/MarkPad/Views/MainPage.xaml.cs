@@ -1,14 +1,18 @@
 ﻿using System;
+using MarkPad.ViewModel;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 
-namespace MarkPad
+namespace MarkPad.Views
 {
     public sealed partial class MainPage
     {
+        private MainViewModel ViewModel { get { return (MainViewModel) DataContext; } }
         private DispatcherTimer t = new DispatcherTimer();
-        MarkdownDeep.Markdown x = new MarkdownDeep.Markdown();
+        private const string Css = @"body { background : #eaeaea; font-family: Segoe UI, sans-serif; }";
+        private readonly MarkdownDeep.Markdown _markdown = new MarkdownDeep.Markdown();
+
         public MainPage()
         {
             InitializeComponent();
@@ -19,23 +23,34 @@ namespace MarkPad
 
         void wv_LoadCompleted(object sender, NavigationEventArgs e)
         {
-            tx.Focus(FocusState.Keyboard);
+            Editor.Focus(FocusState.Keyboard);
         }
 
         void t_Tick(object sender, object e)
         {
             t.Stop();
-            string foo;
-            tx.Document.GetText(TextGetOptions.None, out foo);
-            wv.NavigateToString(string.Format("<html><head><style>{0}</style></head><body>{1}</body></html>", css, x.Transform(foo)));
+
+            string text = "";
+            if (ViewModel.SelectedDocument != null)
+                text = ViewModel.SelectedDocument.Text;
+            wv.NavigateToString(string.Format("<html><head><style>{0}</style></head><body>{1}</body></html>", Css, _markdown.Transform(text)));
         }
 
         private void tx_TextChanged_2(object sender, RoutedEventArgs e)
         {
+            if (ViewModel.SelectedDocument != null)
+            {
+                string foo;
+                Editor.Document.GetText(TextGetOptions.None, out foo);
+                ViewModel.SelectedDocument.Text = foo;
+            }
             t.Stop();
             t.Start();
         }
 
-        private string css = @"body { background : #eaeaea; font-family: Segoe UI, sans-serif; }";
+        private void DocumentsSelectionChanged(object sender, Windows.UI.Xaml.Controls.SelectionChangedEventArgs e)
+        {
+            Editor.Document.SetText(TextSetOptions.None, ViewModel.SelectedDocument.Text);
+        }
     }
 }

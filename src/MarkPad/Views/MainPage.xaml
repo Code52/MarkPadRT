@@ -1,28 +1,60 @@
 ﻿<Page
-    x:Class="MarkPad.MainPage"
+    x:Class="MarkPad.Views.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
+
+    <Page.TopAppBar>
+        <AppBar>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="New" />
+                <Button Content="Open" Command="{Binding OpenCommand}" />
+                <Button Content="Save" />
+            </StackPanel>
+        </AppBar>
+    </Page.TopAppBar>
+    <Page.BottomAppBar>
+        <AppBar>
+            <Grid>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Bold" />
+                    <Button Content="Italic" />
+                    <Button Content="Header" />
+                    <Button Content="Insert link" />
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button Content="Distraction Free" />
+                </StackPanel>
+            </Grid>
+        </AppBar>
+    </Page.BottomAppBar>
 
     <Grid Background="#f9f9f9">
-		<Grid Margin="0">
-			<Grid.ColumnDefinitions>
+        <Grid Margin="0">
+            <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20*" />
-				<ColumnDefinition Width="40*" />
-				<ColumnDefinition Width="40*" />
-			</Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40*" />
+                <ColumnDefinition Width="40*" />
+            </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Background="White">
-                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="37,12,0,0" Foreground="#FFBE0606" Style="{StaticResource PageHeaderTextStyle}">
+                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="18,13,0,0" Foreground="#FFBE0606" Style="{StaticResource PageHeaderTextStyle}">
 			        <Run Text="MarkPad"/>
                 </TextBlock>
+                <ListView x:Name="Documents" ItemsSource="{Binding Documents}" SelectedItem="{Binding SelectedDocument, Mode=TwoWay}" Margin="18,86,0,0" SelectionChanged="DocumentsSelectionChanged">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
-            <RichEditBox x:Name="tx" Grid.Column="1" Background="#f9f9f9" BorderThickness="0" BorderBrush="{x:Null}" Padding="25" TextChanged="tx_TextChanged_2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" AcceptsReturn="True"  />
+            <RichEditBox x:Name="Editor" Grid.Column="1" Background="#f9f9f9" BorderThickness="0" BorderBrush="{x:Null}" Padding="25" TextChanged="tx_TextChanged_2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" AcceptsReturn="True"  />
             <Border Background="#eaeaea" Grid.Column="2" >
                 <WebView x:Name="wv" Margin="15" />
             </Border>
-		</Grid>
-
-	</Grid>
+        </Grid>
+    </Grid>
 </Page>

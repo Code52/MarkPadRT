@@ -24,8 +24,10 @@
           <FileTypeAssociation Name="md">
             <DisplayName>MarkDown</DisplayName>
             <Logo>icon.png</Logo>
+            <InfoTip>MarkDown Document</InfoTip>
+            <EditFlags OpenIsSafe="true" />
             <SupportedFileTypes>
-              <FileType>.md</FileType>
+              <FileType ContentType="text/markdown">.md</FileType>
             </SupportedFileTypes>
           </FileTypeAssociation>
         </Extension>
