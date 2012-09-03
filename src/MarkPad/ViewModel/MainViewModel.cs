@@ -41,14 +41,8 @@ namespace MarkPad.ViewModel
 
         public MainViewModel()
         {
-            Documents = new ObservableCollection<DocumentViewModel>
-                {
-                    new DocumentViewModel {Text = "hi", Name = "test file 1"},
-                    new DocumentViewModel {Text = "world", Name = "test file 2"}
-                };
-         
+            Documents = new ObservableCollection<DocumentViewModel>();
             OpenCommand = new RelayCommand(() => Open());
-
             Load();
         }
 
@@ -60,26 +54,29 @@ namespace MarkPad.ViewModel
                 var text = await file.ReadAllTextAsync();
                 Documents.Add(new DocumentViewModel { Name = file.Name, Text = text });
             }
-            
+
+        }
+
+        public async Task Open(StorageFile f)
+        {
+            var text = await f.ReadAllTextAsync();
+            Documents.Add(new DocumentViewModel { Name = f.Name, Text = text });
+            string token = StorageApplicationPermissions.FutureAccessList.Add(f, f.Name);
+            _localSettings.Values[f.Name] = token;
         }
 
         private async Task Open()
         {
             var filepicker = new FileOpenPicker
             {
-                ViewMode = PickerViewMode.Thumbnail,
+                ViewMode = PickerViewMode.List,
                 SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
                 FileTypeFilter = { ".md", ".mdown", ".markdown" }
             };
 
             var files = await filepicker.PickMultipleFilesAsync();
-            foreach (StorageFile f in files)
-            {
-                var text = await f.ReadAllTextAsync();
-                Documents.Add(new DocumentViewModel { Name = f.Name, Text = text });
-                string token = StorageApplicationPermissions.FutureAccessList.Add(f, f.Name);
-                _localSettings.Values[f.Name] = token;
-            }
+            foreach (var file in files)
+                Open(file);
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using System;
+using MarkPad.ViewModel;
 using MarkPad.Views;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
+using Windows.Storage.AccessCache;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -49,7 +51,21 @@ namespace MarkPad
 
         protected override void OnFileActivated(FileActivatedEventArgs args)
         {
-            var file = args.Files[0] as StorageFile;
+            var locator = (ViewModelLocator)Resources["Locator"];
+            var files = args.Files;
+            foreach (StorageFile file in files)
+                locator.Main.Open(file);
+
+            var rootFrame = Window.Current.Content as Frame;
+
+            if (rootFrame == null)
+            {
+                rootFrame = new Frame();
+                rootFrame.Navigate(typeof (MainPage));
+                Window.Current.Content = rootFrame;
+            }
+
+            Window.Current.Activate();
         }
     }
 }
