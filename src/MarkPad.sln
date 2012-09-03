@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkPadLite", "MarkPadLite\MarkPadLite.csproj", "{70162FB7-445A-4C18-B65F-7AE58B80337D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkPad", "MarkPad\MarkPad.csproj", "{70162FB7-445A-4C18-B65F-7AE58B80337D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

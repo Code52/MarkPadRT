@@ -1,10 +1,9 @@
 ﻿using System;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace MarkPadLite
+namespace MarkPad
 {
     public sealed partial class MainPage
     {
@@ -29,10 +28,6 @@ namespace MarkPadLite
             string foo;
             tx.Document.GetText(TextGetOptions.None, out foo);
             wv.NavigateToString(x.Transform(foo));
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
         }
 
         private void tx_TextChanged_2(object sender, RoutedEventArgs e)

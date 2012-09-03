@@ -7,8 +7,8 @@
     <ProjectGuid>{70162FB7-445A-4C18-B65F-7AE58B80337D}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MarkPadLite</RootNamespace>
-    <AssemblyName>MarkPadLite</AssemblyName>
+    <RootNamespace>MarkPad</RootNamespace>
+    <AssemblyName>MarkPad</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -136,7 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MarkdownDeep">
-      <HintPath>..\..\..\markdowndeep\src\MarkdownDeep.Portable\bin\Debug\MarkdownDeep.dll</HintPath>
+      <HintPath>..\..\lib\MarkdownDeep.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
