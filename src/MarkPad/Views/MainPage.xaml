@@ -8,25 +8,25 @@
     DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
 
     <Page.TopAppBar>
-        <AppBar>
+        <AppBar  Background="#494949">
             <StackPanel Orientation="Horizontal">
-                <Button Content="New" />
-                <Button Content="Open" Command="{Binding OpenCommand}" />
-                <Button Content="Save" />
+                <Button Width="100" Height="100" Content="New" />
+                <Button Width="100" Height="100" Content="Open" Command="{Binding OpenCommand}" />
+                <Button Width="100" Height="100" Content="Save" />
             </StackPanel>
         </AppBar>
     </Page.TopAppBar>
     <Page.BottomAppBar>
-        <AppBar>
+        <AppBar  Background="#494949">
             <Grid>
                 <StackPanel Orientation="Horizontal">
-                    <Button Content="Bold" />
-                    <Button Content="Italic" />
-                    <Button Content="Header" />
-                    <Button Content="Insert link" />
+                    <Button Foreground="White" Style="{StaticResource BoldAppBarButtonStyle}" Click="BoldClicked" />
+                    <Button Foreground="White" Style="{StaticResource ItalicAppBarButtonStyle}"  Click="ItalicClicked"/>
+                    <Button Foreground="White" Style="{StaticResource FontIncreaseAppBarButtonStyle}" Click="HeaderClicked" />
+                    <Button Foreground="White" Style="{StaticResource LinkAppBarButtonStyle}"/>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button Content="Distraction Free" />
+                    <Button Foreground="White" AutomationProperties.Name="Distraction Free" Style="{StaticResource ClosePaneAppBarButtonStyle}" />
                 </StackPanel>
             </Grid>
         </AppBar>
@@ -51,10 +51,12 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </Grid>
-            <RichEditBox x:Name="Editor" Grid.Column="1" Background="#f9f9f9" BorderThickness="0" BorderBrush="{x:Null}" Padding="25" TextChanged="tx_TextChanged_2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" AcceptsReturn="True"  />
+            <RichEditBox x:Name="Editor" Grid.Column="1" Background="#f9f9f9" BorderThickness="0" BorderBrush="{x:Null}" Padding="25" TextChanged="TextChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" AcceptsReturn="True"  />
             <Border Background="#eaeaea" Grid.Column="2" >
+                
                 <WebView x:Name="wv" Margin="15" />
             </Border>
+            <Rectangle x:Name="webRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2"  Margin="15" />
         </Grid>
     </Grid>
 </Page>

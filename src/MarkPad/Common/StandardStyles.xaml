@@ -266,7 +266,7 @@
                             <TextBlock
                                 x:Name="TextLabel"
                                 Text="{TemplateBinding AutomationProperties.Name}"
-                                Foreground="{StaticResource AppBarItemForegroundThemeBrush}"
+                                Foreground="White"
                                 Margin="0,0,2,0"
                                 FontSize="12"
                                 TextAlignment="Center"
@@ -601,6 +601,8 @@
         <Setter Property="AutomationProperties.Name" Value="People"/>
         <Setter Property="Content" Value="&#xE125;"/>
     </Style>
+
+    -->
     <Style x:Key="ClosePaneAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="ClosePaneAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Close Pane"/>
@@ -611,8 +613,6 @@
         <Setter Property="AutomationProperties.Name" Value="Open Pane"/>
         <Setter Property="Content" Value="&#xE127;"/>
     </Style>
-    -->
-
     <!--
     <Style x:Key="WorldAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="WorldAppBarButton"/>
@@ -907,11 +907,7 @@
         <Setter Property="AutomationProperties.Name" Value="Read"/>
         <Setter Property="Content" Value="&#xE166;"/>
     </Style>
-    <Style x:Key="LinkAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
-        <Setter Property="AutomationProperties.AutomationId" Value="LinkAppBarButton"/>
-        <Setter Property="AutomationProperties.Name" Value="Link"/>
-        <Setter Property="Content" Value="&#xE167;"/>
-    </Style>
+
     <Style x:Key="AccountsAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="AccountsAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Accounts"/>
@@ -928,7 +924,11 @@
         <Setter Property="Content" Value="&#xE16A;"/>
     </Style>
     -->
-
+    <Style x:Key="LinkAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
+        <Setter Property="AutomationProperties.AutomationId" Value="LinkAppBarButton"/>
+        <Setter Property="AutomationProperties.Name" Value="Link"/>
+        <Setter Property="Content" Value="&#xE167;"/>
+    </Style>
     <!--
     <Style x:Key="CutAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="CutAppBarButton"/>
@@ -1124,15 +1124,15 @@
         <Setter Property="AutomationProperties.AutomationId" Value="MuteAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Mute"/>
         <Setter Property="Content" Value="&#xE198;"/>
-    </Style>
+    </Style>  -->
     <Style x:Key="ItalicAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="ItalicAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Italic"/>
         <Setter Property="Content" Value="&#xE199;"/>
     </Style>
-    -->
+  
 
-    <!--
+    
     <Style x:Key="UnderlineAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="UnderlineAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Underline"/>
@@ -1143,6 +1143,7 @@
         <Setter Property="AutomationProperties.Name" Value="Bold"/>
         <Setter Property="Content" Value="&#xE19B;"/>
     </Style>
+    <!--
     <Style x:Key="MoveToFolderAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="MoveToFolderAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Move to Folder"/>
@@ -1223,6 +1224,8 @@
         <Setter Property="AutomationProperties.Name" Value="Decrease Font"/>
         <Setter Property="Content" Value="&#xE1C6;"/>
     </Style>
+
+    -->
     <Style x:Key="FontIncreaseAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="FontIncreaseAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Increase Font"/>
@@ -1233,8 +1236,6 @@
         <Setter Property="AutomationProperties.Name" Value="Font Size"/>
         <Setter Property="Content" Value="&#xE1C8;"/>
     </Style>
-    -->
-
     <!--
     <Style x:Key="CellphoneAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="CellphoneAppBarButton"/>
