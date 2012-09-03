@@ -6,12 +6,14 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MarkPad.Extensions;
 using Windows.Storage;
+using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
 
 namespace MarkPad.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
+        readonly ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings;
         private ObservableCollection<DocumentViewModel> _documents;
         private DocumentViewModel _selectedDocument;
 
@@ -44,8 +46,21 @@ namespace MarkPad.ViewModel
                     new DocumentViewModel {Text = "hi", Name = "test file 1"},
                     new DocumentViewModel {Text = "world", Name = "test file 2"}
                 };
-
+         
             OpenCommand = new RelayCommand(() => Open());
+
+            Load();
+        }
+
+        private async Task Load()
+        {
+            foreach (var f in _localSettings.Values)
+            {
+                var file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync((string)f.Value);
+                var text = await file.ReadAllTextAsync();
+                Documents.Add(new DocumentViewModel { Name = file.Name, Text = text });
+            }
+            
         }
 
         private async Task Open()
@@ -62,6 +77,8 @@ namespace MarkPad.ViewModel
             {
                 var text = await f.ReadAllTextAsync();
                 Documents.Add(new DocumentViewModel { Name = f.Name, Text = text });
+                string token = StorageApplicationPermissions.FutureAccessList.Add(f, f.Name);
+                _localSettings.Values[f.Name] = token;
             }
         }
     }
