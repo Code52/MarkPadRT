@@ -44,6 +44,7 @@ namespace MarkPad.ViewModel
             Documents = new ObservableCollection<DocumentViewModel>();
             OpenCommand = new RelayCommand(() => Open());
             Load();
+
         }
 
         private async Task Load()
@@ -54,7 +55,6 @@ namespace MarkPad.ViewModel
                 var text = await file.ReadAllTextAsync();
                 Documents.Add(new DocumentViewModel { Name = file.Name, Text = text });
             }
-
         }
 
         public async Task Open(StorageFile f)

@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using MarkPad.Interfaces;
+using System.Threading.Tasks;
+using MarkPad.Core;
 
 namespace MarkPad.Sources.LocalFiles
 {
     public class LocalFileSource : ISource
     {
+        public async Task<bool> Login()
+        {
+            return true;
+        }
+
         public IFile GetFile()
         {
             throw new NotImplementedException();

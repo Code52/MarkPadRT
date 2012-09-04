@@ -1,4 +1,4 @@
-namespace MarkPad.Interfaces
+namespace MarkPad.Core
 {
     public interface IFile
     {
