@@ -38,13 +38,30 @@ namespace MarkPad.ViewModel
         }
 
         public ICommand OpenCommand { get; set; }
-
+        public ICommand NewCommand { get; set; }
+        public ICommand OpenGithubCommand { get; set; }
         public MainViewModel()
         {
             Documents = new ObservableCollection<DocumentViewModel>();
             OpenCommand = new RelayCommand(() => Open());
+            NewCommand = new RelayCommand(New);
+            OpenGithubCommand = new RelayCommand(() => OpenFromGithub());
             Load();
 
+        }
+
+        private async Task OpenFromGithub()
+        {
+            var gc = new GitHub.GitHubClient();
+            await gc.Login();
+            gc.PickFiles();
+        }
+
+        private void New()
+        {
+            var doc = new DocumentViewModel(string.Empty);
+            Documents.Add(doc);
+            SelectedDocument = doc;
         }
 
         private async Task Load()
@@ -53,14 +70,19 @@ namespace MarkPad.ViewModel
             {
                 var file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync((string)f.Value);
                 var text = await file.ReadAllTextAsync();
-                Documents.Add(new DocumentViewModel { Name = file.Name, Text = text });
+                Documents.Add(new DocumentViewModel(text) { Name = file.Name });
             }
+
+            if (Documents.Count == 0)
+                Documents.Add(new DocumentViewModel("") { Name = "New Doc" });
+               
+            SelectedDocument = Documents[0];
         }
 
         public async Task Open(StorageFile f)
         {
             var text = await f.ReadAllTextAsync();
-            Documents.Add(new DocumentViewModel { Name = f.Name, Text = text });
+            Documents.Add(new DocumentViewModel(text) { Name = f.Name });
             string token = StorageApplicationPermissions.FutureAccessList.Add(f, f.Name);
             _localSettings.Values[f.Name] = token;
         }
