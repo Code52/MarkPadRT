@@ -18,22 +18,7 @@ namespace MarkPad.GitHub
         private const string RedirectUri = "http://vikingco.de";
         private const string Accesstokenuri = "https://github.com/login/oauth/access_token";
         private const string ApiBaseUrl = "https://api.github.com/";
-        private string AccessToken;
-
-        private async Task<string> GetMaster(string user, string repo)
-        {
-            //GET  /repos/:user/:repo/git/refs/heads/master
-            return "";
-        }
-
-        //GET /repos/:user/:repo/git/commits/SHA-LATEST-COMMIT
-
-        //POST /repos/:user/:repo/git/trees/
-
-        private async Task CreateTree()
-        {
-
-        }
+        private string _accessToken;
 
         public async Task<bool> Login()
         {
@@ -65,7 +50,7 @@ namespace MarkPad.GitHub
             var content = new FormUrlEncodedContent(data);
             var request = await c.PostAsync(Accesstokenuri, content);
             var result = await request.Content.ReadAsStringAsync();
-            AccessToken = new WwwFormUrlDecoder(result).GetFirstValueByName("access_token");
+            _accessToken = new WwwFormUrlDecoder(result).GetFirstValueByName("access_token");
             return true;
         }
 
@@ -81,7 +66,7 @@ namespace MarkPad.GitHub
 
         private string GetUrl(string path)
         {
-            return string.Format("{0}{1}?access_token={2}", ApiBaseUrl, path, AccessToken);
+            return string.Format("{0}{1}?access_token={2}", ApiBaseUrl, path, _accessToken);
         }
 
         public async Task SaveFile(string name, string contents, string user, string repo)
@@ -89,16 +74,16 @@ namespace MarkPad.GitHub
             var c = new HttpClient();
 
             var refquery = await c.GetAsync(GetUrl(string.Format("repos/{0}/{1}/git/refs/heads/master", user, repo)));
-            var SHA_LATEST_COMMIT = JObject.Parse(await refquery.Content.ReadAsStringAsync())["object"]["sha"].ToString();
+            var shaLatestCommit = JObject.Parse(await refquery.Content.ReadAsStringAsync())["object"]["sha"].ToString();
 
-            var baseTreeQuery = await c.GetAsync(GetUrl(string.Format("repos/{0}/{1}/git/commits/{2}", user, repo, SHA_LATEST_COMMIT)));
-            var SHA_BASE_TREE = JObject.Parse(await baseTreeQuery.Content.ReadAsStringAsync())["tree"]["sha"].ToString();
+            var baseTreeQuery = await c.GetAsync(GetUrl(string.Format("repos/{0}/{1}/git/commits/{2}", user, repo, shaLatestCommit)));
+            var shaBaseTree = JObject.Parse(await baseTreeQuery.Content.ReadAsStringAsync())["tree"]["sha"].ToString();
 
             //Create a new tree
             string url = "/repos/:user/:repo/git/trees/";
             var tree = new
             {
-                base_tree = SHA_BASE_TREE,
+                base_tree = shaBaseTree,
                 tree = new[] 
                   {  
                       new
@@ -112,21 +97,21 @@ namespace MarkPad.GitHub
             };
 
             var newTreeQuery = await c.PostAsync(GetUrl(string.Format("repos/{0}/{1}/git/trees", user, repo)), new StringContent(JsonConvert.SerializeObject(tree)));
-            var SHA_NEW_TREE = JObject.Parse(await newTreeQuery.Content.ReadAsStringAsync())["sha"].ToString();
+            var shaNewTree = JObject.Parse(await newTreeQuery.Content.ReadAsStringAsync())["sha"].ToString();
 
             //Create a new commit
             var newCommit = new
                 {
                     message = "my commit message",
-                    parents = new[] { SHA_LATEST_COMMIT },
-                    tree = SHA_NEW_TREE
+                    parents = new[] { shaLatestCommit },
+                    tree = shaNewTree
                 };
             var newCommitQuery = await c.PostAsync(GetUrl(string.Format("repos/{0}/{1}/git/commits", user, repo)), new StringContent(JsonConvert.SerializeObject(newCommit)));
             var newCommitResult = await newCommitQuery.Content.ReadAsStringAsync();
-            var SHA_NEW_COMMIT = JObject.Parse(newCommitResult)["sha"].ToString();
+            var shaNewCommit = JObject.Parse(newCommitResult)["sha"].ToString();
 
             //finalise
-            var content = "{\"sha\": \"" + SHA_NEW_COMMIT + "\"}";
+            var content = "{\"sha\": \"" + shaNewCommit + "\"}";
             var newReferenceQuery = await c.PostAsync(GetUrl(string.Format("repos/{0}/{1}/git/refs/heads/master", user, repo)), new StringContent(content));
             var newReferenceResult = await newReferenceQuery.Content.ReadAsStringAsync();
         }
@@ -142,10 +127,4 @@ namespace MarkPad.GitHub
 
         }
     }
-
-    //POST /repos/:user/:repo/git/commits
-
-    ///repos/:user/:repo/git/refs/head/master 
-
-    /*String of the file mode - one of 100644 for file (blob), 100755 for executable (blob), 040000 for subdirectory (tree), 160000 for submodule (commit) or 120000 for a blob that specifies the path of a symlink*/
 }

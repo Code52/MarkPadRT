@@ -10,9 +10,9 @@
     <Page.TopAppBar>
         <AppBar  Background="#494949">
             <StackPanel Orientation="Horizontal">
-                <Button Width="100" Height="100" Content="New" />
-                <Button Width="100" Height="100" Content="Open" Command="{Binding OpenCommand}" />
-                <Button Width="100" Height="100" Content="Save" />
+                <Button Width="100" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Content="New" Command="{Binding NewCommand}"/>
+                <Button Width="100" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Content="Open" Command="{Binding OpenCommand}" />
+                <Button Width="100" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Content="Save" Command="{Binding SaveCommand}"/>
             </StackPanel>
         </AppBar>
     </Page.TopAppBar>
