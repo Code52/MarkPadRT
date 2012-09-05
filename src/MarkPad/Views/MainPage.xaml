@@ -10,9 +10,36 @@
     <Page.TopAppBar>
         <AppBar  Background="#494949">
             <StackPanel Orientation="Horizontal">
-                <Button Width="100" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Content="New" Command="{Binding NewCommand}"/>
-                <Button Width="100" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Content="Open" Command="{Binding OpenCommand}" />
-                <Button Width="100" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Content="Save" Command="{Binding SaveCommand}"/>
+                <Button Width="100" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Command="{Binding NewCommand}">
+                    <StackPanel>
+                        <TextBlock FontFamily="Segoe UI Symbol" Text="&#xE109;" FontSize="45" />
+                        <TextBlock Text="New" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+                <Button Width="100" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Command="{Binding OpenCommand}">
+                    <StackPanel>
+                        <TextBlock FontFamily="Segoe UI Symbol" Text="&#xE197;" FontSize="45" />
+                        <TextBlock Text="Open" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+                <Button Width="100" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Command="{Binding SaveCommand}">
+                    <StackPanel>
+                        <TextBlock FontFamily="Segoe UI Symbol" Text="&#xE105;" FontSize="45" />
+                        <TextBlock Text="Save" HorizontalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+                <Button Margin="50,0,0,0" Width="175" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Command="{Binding OpenCommand}" >
+                    <StackPanel>
+                        <Image Source="../Assets/octocat.png" Height="50" Margin="0,0,0,10"/>
+                        <TextBlock Text="Open from GitHub" />
+                    </StackPanel>
+                </Button>
+                <Button Width="175" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Command="{Binding SaveToGithubCommand}">
+                    <StackPanel>
+                        <Image Source="../Assets/octocat.png" Height="50" Margin="0,0,0,10"/>
+                        <TextBlock Text="Save to GitHub" />
+                    </StackPanel>
+                </Button>
             </StackPanel>
         </AppBar>
     </Page.TopAppBar>

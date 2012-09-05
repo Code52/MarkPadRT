@@ -102,6 +102,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="GitHubClient.cs" />
+    <Compile Include="GitHubFileOpenPickerPage.xaml.cs">
+      <DependentUpon>GitHubFileOpenPickerPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -118,8 +121,17 @@
       <Name>MarkPad.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Page Include="GitHubFileOpenPickerPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

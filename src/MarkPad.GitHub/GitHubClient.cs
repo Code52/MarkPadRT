@@ -64,6 +64,20 @@ namespace MarkPad.GitHub
             return null;
         }
 
+        public async Task<List<string>> GetRepos()
+        {
+            var results = new List<string>();
+            var c = new HttpClient();
+            var query = await c.GetAsync(GetUrl("user/repos"));
+            var obj = JObject.Parse("{ \"repos\": " + await query.Content.ReadAsStringAsync() + "}");
+            
+            foreach (var x in obj["repos"].AsJEnumerable())
+            {
+                results.Add(x["name"].ToString());
+            }
+            return results;
+        }
+
         private string GetUrl(string path)
         {
             return string.Format("{0}{1}?access_token={2}", ApiBaseUrl, path, _accessToken);
