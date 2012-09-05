@@ -14,9 +14,21 @@ namespace MarkPad.ViewModel
             {
                 _text = value;
                 RaisePropertyChanged(() => Text);
+                RaisePropertyChanged(() => IsModified);
             }
         }
 
+        public string OriginalText { get; private set; }
+
+        public bool IsModified
+        {
+            get
+            {
+                //This is ugly.
+                return Text.Trim('\r', '\n').Replace("\n", "") != OriginalText.Replace("\n", "");
+            }
+        }
+        
         public string Name
         {
             get { return _name; }
@@ -25,6 +37,13 @@ namespace MarkPad.ViewModel
                 _name = value;
                 RaisePropertyChanged(() => Name);
             }
+        }
+
+        public DocumentViewModel(string originalText, string fileName = "New Document")
+        {
+            OriginalText = originalText;
+            Text = originalText;
+            Name = fileName;
         }
     }
 }

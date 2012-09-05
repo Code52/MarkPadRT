@@ -3,10 +3,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:MarkPad="using:MarkPad"
     mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
-
+    <Page.Resources>
+        <MarkPad:BooleanToVisibilityConverter  x:Key="BooleanToVisibilityConverter" />
+    </Page.Resources>
     <Page.TopAppBar>
         <AppBar  Background="#494949">
             <StackPanel Orientation="Horizontal">
@@ -17,7 +19,7 @@
                     </StackPanel>
                 </Button>
                 <Button Width="100" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Command="{Binding OpenCommand}">
-                    <StackPanel>
+		    <StackPanel>
                         <TextBlock FontFamily="Segoe UI Symbol" Text="&#xE197;" FontSize="45" />
                         <TextBlock Text="Open" HorizontalAlignment="Center" />
                     </StackPanel>
@@ -71,7 +73,10 @@
                 <ListBox x:Name="Documents" BorderBrush="{x:Null}" BorderThickness="0" ItemsSource="{Binding Documents}" SelectedItem="{Binding SelectedDocument, Mode=TwoWay}" Margin="18,86,0,0" SelectionChanged="DocumentsSelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Name}" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Name}" />
+                                <TextBlock Text="*" Visibility="{Binding IsModified, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
