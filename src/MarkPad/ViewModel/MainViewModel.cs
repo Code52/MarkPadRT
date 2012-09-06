@@ -39,22 +39,14 @@ namespace MarkPad.ViewModel
 
         public ICommand OpenCommand { get; set; }
         public ICommand NewCommand { get; set; }
-        public ICommand OpenGithubCommand { get; set; }
+
         public MainViewModel()
         {
             Documents = new ObservableCollection<DocumentViewModel>();
             OpenCommand = new RelayCommand(() => Open());
             NewCommand = new RelayCommand(New);
-            OpenGithubCommand = new RelayCommand(() => OpenFromGithub());
             Load();
 
-        }
-
-        private async Task OpenFromGithub()
-        {
-            var gc = new GitHub.GitHubClient();
-            await gc.Login();
-            gc.PickFiles();
         }
 
         private void New()

@@ -1,15 +1,17 @@
-﻿<Page
+﻿<Common:LayoutAwarePage
     x:Class="MarkPad.Views.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:MarkPad="using:MarkPad"
-    mc:Ignorable="d"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Common="using:MarkPad.Common" mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
-    <Page.Resources>
-        <MarkPad:BooleanToVisibilityConverter  x:Key="BooleanToVisibilityConverter" />
-    </Page.Resources>
-    <Page.TopAppBar>
+
+    <Common:LayoutAwarePage.Resources>
+        <Common:BooleanToVisibilityConverter  x:Key="BooleanToVisibilityConverter" />
+    </Common:LayoutAwarePage.Resources>
+
+    <Common:LayoutAwarePage.TopAppBar>
         <AppBar  Background="#494949">
             <StackPanel Orientation="Horizontal">
                 <Button Width="100" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Command="{Binding NewCommand}">
@@ -19,7 +21,7 @@
                     </StackPanel>
                 </Button>
                 <Button Width="100" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Command="{Binding OpenCommand}">
-		    <StackPanel>
+                    <StackPanel>
                         <TextBlock FontFamily="Segoe UI Symbol" Text="&#xE197;" FontSize="45" />
                         <TextBlock Text="Open" HorizontalAlignment="Center" />
                     </StackPanel>
@@ -30,7 +32,7 @@
                         <TextBlock Text="Save" HorizontalAlignment="Center" />
                     </StackPanel>
                 </Button>
-                <Button Margin="50,0,0,0" Width="175" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Command="{Binding OpenCommand}" >
+                <!--<Button Margin="50,0,0,0" Width="175" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Command="{Binding OpenCommand}" >
                     <StackPanel>
                         <Image Source="../Assets/octocat.png" Height="50" Margin="0,0,0,10"/>
                         <TextBlock Text="Open from GitHub" />
@@ -41,11 +43,11 @@
                         <Image Source="../Assets/octocat.png" Height="50" Margin="0,0,0,10"/>
                         <TextBlock Text="Save to GitHub" />
                     </StackPanel>
-                </Button>
+                </Button>-->
             </StackPanel>
         </AppBar>
-    </Page.TopAppBar>
-    <Page.BottomAppBar>
+    </Common:LayoutAwarePage.TopAppBar>
+    <Common:LayoutAwarePage.BottomAppBar>
         <AppBar  Background="#494949">
             <Grid>
                 <StackPanel Orientation="Horizontal">
@@ -55,37 +57,113 @@
                     <Button Foreground="White" Style="{StaticResource LinkAppBarButtonStyle}"/>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button Foreground="White" AutomationProperties.Name="Distraction Free" Style="{StaticResource ClosePaneAppBarButtonStyle}" />
+                    <Button x:Name="btnDistraction" Foreground="White" AutomationProperties.Name="Distraction Free" Style="{StaticResource ClosePaneAppBarButtonStyle}" />
                 </StackPanel>
             </Grid>
         </AppBar>
-    </Page.BottomAppBar>
+    </Common:LayoutAwarePage.BottomAppBar>
 
-    <Grid Background="#f9f9f9">
-        <Grid Margin="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250" />
-                <ColumnDefinition Width="40*" />
-                <ColumnDefinition Width="40*" />
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Background="White">
-                <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="18,13,0,0" Foreground="#FFBE0606" Style="{StaticResource PageHeaderTextStyle}" Text="MarkPad"/>
-                <ListBox x:Name="Documents" BorderBrush="{x:Null}" BorderThickness="0" ItemsSource="{Binding Documents}" SelectedItem="{Binding SelectedDocument, Mode=TwoWay}" Margin="18,86,0,0" SelectionChanged="DocumentsSelectionChanged">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Name}" />
-                                <TextBlock Text="*" Visibility="{Binding IsModified, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Grid>
-            <RichEditBox x:Name="Editor" Grid.Column="1" Background="#f9f9f9" BorderThickness="0" BorderBrush="{x:Null}" Padding="25, 25, 25, 0" TextChanged="TextChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" AcceptsReturn="True"  />
-            <Border Background="#eaeaea" Grid.Column="2" >
-                <WebView x:Name="wv" Margin="15,15,15,0" />
-            </Border>
-            <Rectangle x:Name="webRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2"  Margin="15,15,15,0" />
+    <Grid Background="#f9f9f9" Style="{StaticResource LayoutRootStyle}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" x:Name="colFiles" />
+            <ColumnDefinition Width="40*" x:Name="colEditor"/>
+            <ColumnDefinition Width="40*" x:Name="colPreview" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Background="White">
+            <TextBlock x:Name="title" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="18,13,0,0" Foreground="#FFBE0606" Style="{StaticResource PageHeaderTextStyle}" Text="MarkPad"/>
+            <ListBox x:Name="Documents" BorderBrush="{x:Null}" BorderThickness="0" ItemsSource="{Binding Documents}" SelectedItem="{Binding SelectedDocument, Mode=TwoWay}" Margin="18,86,0,0" SelectionChanged="DocumentsSelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}" />
+                            <TextBlock Text="*" Visibility="{Binding IsModified, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </Grid>
+        
+        <RichEditBox x:Name="Editor" Grid.Column="1" Background="#f9f9f9" BorderThickness="0" BorderBrush="{x:Null}" Padding="25, 25, 25, 0" TextChanged="TextChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" AcceptsReturn="True"  />
+        <Border Background="#eaeaea" Grid.Column="2" >
+            <WebView x:Name="wv" Margin="15,15,15,0" />
+        </Border>
+        <Rectangle x:Name="webRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2"  Margin="15,15,15,0" />
+        <Button Content="Preview" x:Name="btnPreview" Visibility="Collapsed" Click="btnPreview_Click_1" Grid.Column="1" Margin="0,0,0,734"/>
+        <Button Content="editor" x:Name="btnEditor" Grid.Column="2" Visibility="Collapsed" Click="btnEditor_Click_1"  VerticalAlignment="Top"/>
+        
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="ApplicationViewStates">
+                <VisualState x:Name="FullScreenLandscapeOrWide"/>
+                <VisualState x:Name="FilledOrNarrow" />
+
+                <VisualState x:Name="Snapped">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="colFiles" Storyboard.TargetProperty="Width">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Documents" Storyboard.TargetProperty="Width">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                        </ObjectAnimationUsingKeyFrames>
+
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="colEditor" Storyboard.TargetProperty="Width">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="*" />
+                        </ObjectAnimationUsingKeyFrames>
+
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="colPreview" Storyboard.TargetProperty="Width">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                        </ObjectAnimationUsingKeyFrames>
+
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnPreview" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                        </ObjectAnimationUsingKeyFrames>
+                        
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnDistraction" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                        </ObjectAnimationUsingKeyFrames>
+                        
+                    </Storyboard>
+                </VisualState>
+
+                <VisualState x:Name="Snapped_Preview">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="colFiles" Storyboard.TargetProperty="Width">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                        </ObjectAnimationUsingKeyFrames>
+                        
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="colEditor" Storyboard.TargetProperty="Width">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                        </ObjectAnimationUsingKeyFrames>
+
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="colPreview" Storyboard.TargetProperty="Width">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="*" />
+                        </ObjectAnimationUsingKeyFrames>
+
+
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnEditor" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                        </ObjectAnimationUsingKeyFrames>
+                        
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="webRectangle">
+                        	<DiscreteObjectKeyFrame KeyTime="0">
+                        		<DiscreteObjectKeyFrame.Value>
+                        			<Thickness>15,39,15,0</Thickness>
+                        		</DiscreteObjectKeyFrame.Value>
+                        	</DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="wv">
+                        	<DiscreteObjectKeyFrame KeyTime="0">
+                        		<DiscreteObjectKeyFrame.Value>
+                        			<Thickness>15,39,15,0</Thickness>
+                        		</DiscreteObjectKeyFrame.Value>
+                        	</DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
+
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnDistraction" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
-</Page>
+</Common:LayoutAwarePage>

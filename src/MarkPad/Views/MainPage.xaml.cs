@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using MarkPad.ViewModel;
 using Windows.UI.Text;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -71,7 +73,7 @@ namespace MarkPad.Views
             _timer.Start();
         }
 
-        private void DocumentsSelectionChanged(object sender, Windows.UI.Xaml.Controls.SelectionChangedEventArgs e)
+        private void DocumentsSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Editor.Document.SetText(TextSetOptions.None, ViewModel.SelectedDocument.Text);
         }
@@ -97,6 +99,58 @@ namespace MarkPad.Views
             Editor.Document.Selection.GetText(TextGetOptions.None, out selection);
             selection = transform(selection);
             Editor.Document.Selection.SetText(TextSetOptions.None, selection);
+        }
+
+        protected override void LoadState(Object navigationParameter, Dictionary<String, Object> pageState)
+        {
+
+        }
+
+        protected override void SaveState(Dictionary<String, Object> pageState)
+        {
+
+        }
+
+        private bool UsingLogicalPageNavigation(ApplicationViewState? viewState = null)
+        {
+            if (viewState == null) 
+                viewState = ApplicationView.Value;
+
+            return viewState == ApplicationViewState.FullScreenPortrait || viewState == ApplicationViewState.Snapped;
+        }
+
+        protected override void GoBack(object sender, RoutedEventArgs e)
+        {
+            base.GoBack(sender, e);
+        }
+
+        protected override string DetermineVisualState(ApplicationViewState viewState)
+        {
+            var logicalPageBack = UsingLogicalPageNavigation(viewState);// && this.itemListView.SelectedItem != null;
+            var physicalPageBack = Frame != null && Frame.CanGoBack;
+            DefaultViewModel["CanGoBack"] = logicalPageBack || physicalPageBack;
+
+            if (viewState == ApplicationViewState.Filled || viewState == ApplicationViewState.FullScreenLandscape)
+            {
+                var windowWidth = Window.Current.Bounds.Width;
+                if (windowWidth >= 1366)
+                    return "FullScreenLandscapeOrWide";
+                return "FilledOrNarrow";
+            }
+
+            var defaultStateName = base.DetermineVisualState(viewState);
+            return defaultStateName;
+            return logicalPageBack ? defaultStateName + "_Detail" : defaultStateName;
+        }
+
+        private void btnPreview_Click_1(object sender, RoutedEventArgs e)
+        {
+            VisualStateManager.GoToState(this, "Snapped_Preview", false);
+        }
+
+        private void btnEditor_Click_1(object sender, RoutedEventArgs e)
+        {
+            VisualStateManager.GoToState(this, "Snapped", false);
         }
     }
 }
