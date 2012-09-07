@@ -6,9 +6,8 @@ namespace MarkPad.Core
     public interface ISource
     {
         Task<bool> Login();
-        IFile GetFile();
-        IEnumerable<IFile> GetFiles();
-        void SaveFile(IFile file);
-        void SaveFiles(IEnumerable<IFile> files);
+        Task<IEnumerable<Document>> Open();
+        Task<IEnumerable<Document>> Restore();
+        Task Save(Document document);
     }
 }

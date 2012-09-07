@@ -54,14 +54,34 @@ namespace MarkPad.GitHub
             return true;
         }
 
-        public IFile GetFile()
+        public Task<IEnumerable<Document>> Open()
         {
             return null;
         }
 
-        public IEnumerable<IFile> GetFiles()
+        public Task<IEnumerable<Document>> Restore()
         {
             return null;
+        }
+
+        public async Task Save(Document document)
+        {
+            return;
+        }
+
+        public Document GetFile()
+        {
+            return null;
+        }
+
+        public IEnumerable<Document> GetFiles()
+        {
+            return null;
+        }
+
+        public void Save(IEnumerable<Document> document)
+        {
+        
         }
 
         public async Task<List<string>> GetRepos()
@@ -128,17 +148,6 @@ namespace MarkPad.GitHub
             var content = "{\"sha\": \"" + shaNewCommit + "\"}";
             var newReferenceQuery = await c.PostAsync(GetUrl(string.Format("repos/{0}/{1}/git/refs/heads/master", user, repo)), new StringContent(content));
             var newReferenceResult = await newReferenceQuery.Content.ReadAsStringAsync();
-        }
-
-
-        public void SaveFile(IFile file)
-        {
-
-        }
-
-        public void SaveFiles(IEnumerable<IFile> files)
-        {
-
         }
     }
 }

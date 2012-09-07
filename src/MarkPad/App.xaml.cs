@@ -1,4 +1,5 @@
 ﻿using System;
+using MarkPad.Sources.LocalFiles;
 using MarkPad.ViewModel;
 using MarkPad.Views;
 using Windows.ApplicationModel;
@@ -54,7 +55,11 @@ namespace MarkPad
             var locator = (ViewModelLocator)Resources["Locator"];
             var files = args.Files;
             foreach (StorageFile file in files)
-                locator.Main.Open(file);
+            {
+                var x = new LocalDocument(file);
+                x.Load();
+                locator.Main.Documents.Add(x);
+            }
 
             var rootFrame = Window.Current.Content as Frame;
 
