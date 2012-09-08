@@ -47,9 +47,10 @@ namespace MarkPad.Sources.LocalFiles
             foreach (var f in _localSettings.Values)
             {
                 var file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync((string)f.Value);
-                docs.Add(new LocalDocument(file));
+                var d = new LocalDocument(file);
+                await d.Load();
+                docs.Add(d);
             }
-
             return docs;
         }
 
@@ -71,6 +72,9 @@ namespace MarkPad.Sources.LocalFiles
                 filepicker.FileTypeChoices.Add("Markdown", new List<string> { ".md", ".mdown", ".markdown", ".mkd" });
                 file = await filepicker.PickSaveFileAsync();
                 doc.File = file;
+
+                string token = StorageApplicationPermissions.FutureAccessList.Add(file, file.Name);
+                _localSettings.Values[file.Name] = token;
             }
             else
                 file = doc.File;
@@ -83,5 +87,19 @@ namespace MarkPad.Sources.LocalFiles
             }
         }
 
+        public void Close(Document document)
+        {
+            try
+            {
+                var doc = (LocalDocument)document;
+                var token = _localSettings.Values[doc.File.Name];
+                StorageApplicationPermissions.FutureAccessList.Remove((string)token);
+                _localSettings.Values.Remove(doc.File.Name);
+            }
+            catch (Exception o_0)
+            {
+
+            }
+        }
     }
 }

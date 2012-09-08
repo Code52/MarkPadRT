@@ -49,6 +49,7 @@ namespace MarkPad.ViewModel
                     if (d.IsModified)
                         _source.Save(d);
 
+                    _source.Close(d);
                     Documents.Remove(d);
                 });
             Load();
@@ -57,7 +58,6 @@ namespace MarkPad.ViewModel
 
         private void New()
         {
-            _source.Restore();
             var doc = new LocalDocument(string.Empty);
             Documents.Add(doc);
             SelectedDocument = doc;
@@ -65,7 +65,11 @@ namespace MarkPad.ViewModel
 
         private async Task Load()
         {
-          
+            foreach (var d in await _source.Restore())
+            {
+                Documents.Add(d);
+            }
+
             if (Documents.Count == 0)
                 Documents.Add(new LocalDocument("") { Name = "New Doc" });
                
