@@ -114,7 +114,6 @@
     <Compile Include="Extensions\StorageFileExtensions.cs" />
     <Compile Include="Sources\LocalFiles\LocalDocument.cs" />
     <Compile Include="Sources\LocalFiles\LocalSource.cs" />
-    <Compile Include="ViewModel\DocumentViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Views\MainPage.xaml.cs">

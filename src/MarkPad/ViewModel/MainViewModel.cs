@@ -1,3 +1,4 @@
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -5,6 +6,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MarkPad.Core;
 using MarkPad.Sources.LocalFiles;
+using Windows.UI.Popups;
 
 namespace MarkPad.ViewModel
 {
@@ -44,16 +46,33 @@ namespace MarkPad.ViewModel
             OpenCommand = new RelayCommand(() => Open());
             NewCommand = new RelayCommand(New);
             SaveCommand = new RelayCommand(() => _source.Save(SelectedDocument));
-            CloseCommand = new RelayCommand<Document>((d) =>
+            CloseCommand = new RelayCommand<Document>(async d =>
                 {
-                    if (d.IsModified)
+                    if (d.IsModified && await ShouldSave()) 
                         _source.Save(d);
 
                     _source.Close(d);
                     Documents.Remove(d);
+
+                    if (Documents.Count == 0)
+                        New();
                 });
             Load();
 
+        }
+
+        private async Task<bool> ShouldSave()
+        {
+            var tcs = new TaskCompletionSource<bool>();
+
+            var d = new MessageDialog("Do you want to save this file before closing?");
+            d.Commands.Add(new UICommand("Yes", command => tcs.SetResult(true)));
+            d.Commands.Add(new UICommand("Close", command => tcs.SetResult(false)));
+            d.DefaultCommandIndex = 0;
+            d.CancelCommandIndex = 1;
+            await d.ShowAsync();
+
+            return await tcs.Task;
         }
 
         private void New()
