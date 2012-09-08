@@ -6,6 +6,7 @@ namespace MarkPad.Core
     {
         private string _text;
         private string _name;
+        private string _originalText;
 
         public string Text
         {
@@ -17,7 +18,7 @@ namespace MarkPad.Core
                 RaisePropertyChanged(() => IsModified);
             }
         }
-                
+
         public string Name
         {
             get { return _name; }
@@ -28,7 +29,16 @@ namespace MarkPad.Core
             }
         }
 
-        public string OriginalText { get; set; }
+        public string OriginalText
+        {
+            get { return _originalText; }
+            set
+            {
+                _originalText = value;
+                RaisePropertyChanged(() => IsModified);
+            }
+        }
+
         public ISource Source { get; set; }
         public bool IsModified
         {
@@ -41,7 +51,7 @@ namespace MarkPad.Core
 
         protected Document()
         {
-            
+
         }
 
         protected Document(string originalText, string fileName = "New Document")

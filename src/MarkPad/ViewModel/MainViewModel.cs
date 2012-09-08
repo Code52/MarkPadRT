@@ -37,13 +37,20 @@ namespace MarkPad.ViewModel
         public ICommand OpenCommand { get; set; }
         public ICommand NewCommand { get; set; }
         public ICommand SaveCommand { get; set; }
-
+        public ICommand CloseCommand { get; set; }
         public MainViewModel()
         {
             Documents = new ObservableCollection<Document>();
             OpenCommand = new RelayCommand(() => Open());
             NewCommand = new RelayCommand(New);
             SaveCommand = new RelayCommand(() => _source.Save(SelectedDocument));
+            CloseCommand = new RelayCommand<Document>((d) =>
+                {
+                    if (d.IsModified)
+                        _source.Save(d);
+
+                    Documents.Remove(d);
+                });
             Load();
 
         }
@@ -71,6 +78,7 @@ namespace MarkPad.ViewModel
             foreach (var f in files)
             {
                 Documents.Add(f);
+                SelectedDocument = f;
             }
         }
     }

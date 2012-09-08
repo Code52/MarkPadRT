@@ -59,6 +59,7 @@ namespace MarkPad.Sources.LocalFiles
             if (!doc.IsModified)
                 return;
 
+            StorageFile file;
             if (doc.File == null)
             {
                 var filepicker = new FileSavePicker
@@ -68,16 +69,17 @@ namespace MarkPad.Sources.LocalFiles
                         SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
                     };
                 filepicker.FileTypeChoices.Add("Markdown", new List<string> { ".md", ".mdown", ".markdown", ".mkd" });
+                file = await filepicker.PickSaveFileAsync();
+                doc.File = file;
+            }
+            else
+                file = doc.File;
 
-
-                var file = await filepicker.PickSaveFileAsync();
-                if (file != null)
-                {
-                    doc.File = file;
-                    doc.Name = file.Name;
-                    await FileIO.WriteTextAsync(file, doc.Text);
-                    doc.OriginalText = doc.Text;
-                }
+            if (file != null)
+            {
+                doc.Name = file.Name;
+                await FileIO.WriteTextAsync(file, doc.Text);
+                doc.OriginalText = doc.Text.Trim('\r', '\n');
             }
         }
 

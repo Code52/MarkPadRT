@@ -48,7 +48,7 @@ namespace MarkPad.Views
         void wv_LoadCompleted(object sender, NavigationEventArgs e)
         {
             Editor.Focus(FocusState.Keyboard);
-           
+
         }
 
         void TimerTick(object sender, object e)
@@ -75,7 +75,7 @@ namespace MarkPad.Views
 
         private void DocumentsSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Editor.Document.SetText(TextSetOptions.None, ViewModel.SelectedDocument.Text);
+            Editor.Document.SetText(TextSetOptions.None, ViewModel.SelectedDocument != null ? ViewModel.SelectedDocument.Text : string.Empty);
         }
 
         private void BoldClicked(object sender, RoutedEventArgs e)
@@ -113,7 +113,7 @@ namespace MarkPad.Views
 
         private bool UsingLogicalPageNavigation(ApplicationViewState? viewState = null)
         {
-            if (viewState == null) 
+            if (viewState == null)
                 viewState = ApplicationView.Value;
 
             return viewState == ApplicationViewState.FullScreenPortrait || viewState == ApplicationViewState.Snapped;
