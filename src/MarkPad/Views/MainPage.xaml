@@ -89,8 +89,8 @@
             <WebView x:Name="wv" Margin="15,15,15,0" />
         </Border>
         <Rectangle x:Name="webRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2"  Margin="15,15,15,0" />
-        <Button Content="Preview" x:Name="btnPreview" Visibility="Collapsed" Click="btnPreview_Click_1" Grid.Column="1" Margin="0,0,0,734"/>
-        <Button Content="editor" x:Name="btnEditor" Grid.Column="2" Visibility="Collapsed" Click="btnEditor_Click_1"  VerticalAlignment="Top"/>
+        <Button Content="Preview" x:Name="btnPreview" Visibility="Collapsed" Click="BtnPreviewClicked" Grid.Column="1" Margin="0,0,0,734"/>
+        <Button Content="editor" x:Name="btnEditor" Grid.Column="2" Visibility="Collapsed" Click="BtnEditorClicked"  VerticalAlignment="Top"/>
         
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="ApplicationViewStates">

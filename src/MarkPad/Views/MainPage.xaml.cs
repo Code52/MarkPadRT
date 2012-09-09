@@ -143,14 +143,15 @@ namespace MarkPad.Views
             return logicalPageBack ? defaultStateName + "_Detail" : defaultStateName;
         }
 
-        private void btnPreview_Click_1(object sender, RoutedEventArgs e)
+        private void BtnPreviewClicked(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(this, "Snapped_Preview", false);
         }
 
-        private void btnEditor_Click_1(object sender, RoutedEventArgs e)
+        private void BtnEditorClicked(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(this, "Snapped", false);
         }
     }
+
 }
