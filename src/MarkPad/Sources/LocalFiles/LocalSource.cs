@@ -93,6 +93,9 @@ namespace MarkPad.Sources.LocalFiles
             try
             {
                 var doc = (LocalDocument)document;
+                if (doc.File == null)
+                    return;
+
                 var token = _localSettings.Values[doc.File.Name];
                 StorageApplicationPermissions.FutureAccessList.Remove((string)token);
                 _localSettings.Values.Remove(doc.File.Name);

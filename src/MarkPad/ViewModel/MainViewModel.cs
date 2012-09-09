@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using MarkPad.Core;
 using MarkPad.Sources.LocalFiles;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Popups;
 
 namespace MarkPad.ViewModel
@@ -48,7 +49,7 @@ namespace MarkPad.ViewModel
             SaveCommand = new RelayCommand(() => _source.Save(SelectedDocument));
             CloseCommand = new RelayCommand<Document>(async d =>
                 {
-                    if (d.IsModified && await ShouldSave()) 
+                    if (d.IsModified && await ShouldSave())
                         _source.Save(d);
 
                     _source.Close(d);
@@ -59,6 +60,19 @@ namespace MarkPad.ViewModel
                 });
             Load();
 
+            DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
+            dataTransferManager.DataRequested += ShareRequested;
+        }
+
+        private void ShareRequested(DataTransferManager sender, DataRequestedEventArgs args)
+        {
+            if (SelectedDocument == null)
+                return;
+
+            DataRequest request = args.Request;
+            request.Data.Properties.Title = SelectedDocument.Name;
+            request.Data.SetText(SelectedDocument.Text);
+            request.Data.SetHtmlFormat(HtmlFormatHelper.CreateHtmlFormat(new MarkdownDeep.Markdown().Transform(SelectedDocument.Text)));
         }
 
         private async Task<bool> ShouldSave()
@@ -91,7 +105,7 @@ namespace MarkPad.ViewModel
 
             if (Documents.Count == 0)
                 Documents.Add(new LocalDocument("") { Name = "New Doc" });
-               
+
             SelectedDocument = Documents[0];
         }
 
