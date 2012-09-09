@@ -2,17 +2,24 @@ using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Callisto.Controls;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using MarkPad.Core;
+using MarkPad.Messages;
 using MarkPad.Sources.LocalFiles;
+using MarkPad.Views;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.UI.ApplicationSettings;
 using Windows.UI.Popups;
 
 namespace MarkPad.ViewModel
 {
+
     public class MainViewModel : ViewModelBase
     {
+        private SettingsFlyout _flyout;
         private readonly LocalSource _source = new LocalSource();
         private ObservableCollection<Document> _documents;
         private Document _selectedDocument;
@@ -65,6 +72,26 @@ namespace MarkPad.ViewModel
 
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
             dataTransferManager.DataRequested += ShareRequested;
+            SettingsPane.GetForCurrentView().CommandsRequested += CommandsRequested;
+        }
+
+
+        private void CommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
+        {
+            var cmd = new SettingsCommand("sample", "Settings", (x) =>
+            {
+                Messenger.Default.Send(new HideWebviewMessage());
+                _flyout = new SettingsFlyout
+                {
+                    HeaderText = "Settings",
+                    Content = new Settings(),
+                    IsOpen = true,
+                };
+
+                _flyout.Closed += (s, e) => Messenger.Default.Send(new ShowWebViewMessage());
+            });
+
+            args.Request.ApplicationCommands.Add(cmd);
         }
 
         private void ShareRequested(DataTransferManager sender, DataRequestedEventArgs args)

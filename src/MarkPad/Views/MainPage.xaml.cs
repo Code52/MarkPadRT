@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using GalaSoft.MvvmLight.Messaging;
+using MarkPad.Messages;
 using MarkPad.ViewModel;
 using Windows.UI.Text;
 using Windows.UI.ViewManagement;
@@ -13,6 +15,7 @@ namespace MarkPad.Views
     {
         private MainViewModel ViewModel { get { return (MainViewModel)DataContext; } }
         private readonly DispatcherTimer _timer = new DispatcherTimer();
+        private readonly DispatcherTimer _closeWebView = new DispatcherTimer();
         private const string Css = @"body { background : #eaeaea; font-family: Segoe UI, sans-serif; }";
         private readonly MarkdownDeep.Markdown _markdown = new MarkdownDeep.Markdown();
         private readonly WebViewBrush _webBrush;
@@ -22,6 +25,14 @@ namespace MarkPad.Views
             InitializeComponent();
             _timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
             _timer.Tick += TimerTick;
+            _closeWebView.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            _closeWebView.Tick +=(s, e) =>
+                {
+                    _closeWebView.Stop();
+                    wv.Visibility = Visibility.Visible;
+                    webRectangle.Visibility = Visibility.Collapsed;
+                
+                };
             wv.LoadCompleted += wv_LoadCompleted;
             BottomAppBar.Opened += (s, e) => SwitchWebViewForWebViewBrush();
             BottomAppBar.Closed += (s, e) => SwitchWebViewBrushForWebView();
@@ -29,16 +40,23 @@ namespace MarkPad.Views
             _webBrush = new WebViewBrush();
             _webBrush.SetSource(wv);
             webRectangle.Fill = _webBrush;
+
+            Messenger.Default.Register<HideWebviewMessage>(this, o => SwitchWebViewForWebViewBrush());
+            Messenger.Default.Register<ShowWebViewMessage>(this, o => SwitchWebViewBrushForWebView());
         }
 
         private void SwitchWebViewBrushForWebView()
         {
-            wv.Visibility = Visibility.Visible;
-            webRectangle.Visibility = Visibility.Collapsed;
+            if (_closeWebView.IsEnabled)
+                _closeWebView.Stop();
+            _closeWebView.Start();
         }
 
         private void SwitchWebViewForWebViewBrush()
         {
+            if (_closeWebView.IsEnabled)
+                _closeWebView.Stop();
+
             if (_webBrush != null)
                 _webBrush.Redraw();
             webRectangle.Visibility = Visibility.Visible;
@@ -111,6 +129,23 @@ namespace MarkPad.Views
 
         }
 
+
+        private void BtnPreviewClicked(object sender, RoutedEventArgs e)
+        {
+            VisualStateManager.GoToState(this, "Snapped_Preview", false);
+        }
+
+        private void BtnEditorClicked(object sender, RoutedEventArgs e)
+        {
+            VisualStateManager.GoToState(this, "Snapped", false);
+        }
+
+        private void DistractionToggled(object sender, RoutedEventArgs e)
+        {
+            VisualStateManager.GoToState(this, ViewModel.Distraction ? "DistractionFree" : "FullScreenLandscapeOrWide", false);
+            ViewModel.Distraction = !ViewModel.Distraction;
+        }
+
         private bool UsingLogicalPageNavigation(ApplicationViewState? viewState = null)
         {
             if (viewState == null)
@@ -142,22 +177,5 @@ namespace MarkPad.Views
             return defaultStateName;
             return logicalPageBack ? defaultStateName + "_Detail" : defaultStateName;
         }
-
-        private void BtnPreviewClicked(object sender, RoutedEventArgs e)
-        {
-            VisualStateManager.GoToState(this, "Snapped_Preview", false);
-        }
-
-        private void BtnEditorClicked(object sender, RoutedEventArgs e)
-        {
-            VisualStateManager.GoToState(this, "Snapped", false);
-        }
-
-        private void DistractionToggled(object sender, RoutedEventArgs e)
-        {
-            VisualStateManager.GoToState(this, ViewModel.Distraction ? "DistractionFree" : "FullScreenLandscapeOrWide", false);
-            ViewModel.Distraction = !ViewModel.Distraction;
-        }
     }
-
 }
