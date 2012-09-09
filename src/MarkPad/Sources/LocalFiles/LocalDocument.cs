@@ -23,6 +23,10 @@ namespace MarkPad.Sources.LocalFiles
             Text = t;
         }
 
+        public LocalDocument() : base ("", "New Document")
+        {
+
+        }
         public LocalDocument(string originalText, string fileName = "New Document")
             : base(originalText, fileName)
         {

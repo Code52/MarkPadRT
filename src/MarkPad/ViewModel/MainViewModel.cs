@@ -27,6 +27,8 @@ namespace MarkPad.ViewModel
             }
         }
 
+        public bool Distraction { get; set; }
+
         public Document SelectedDocument
         {
             get { return _selectedDocument; }
@@ -43,6 +45,7 @@ namespace MarkPad.ViewModel
         public ICommand CloseCommand { get; set; }
         public MainViewModel()
         {
+            Distraction = true;
             Documents = new ObservableCollection<Document>();
             OpenCommand = new RelayCommand(() => Open());
             NewCommand = new RelayCommand(New);
@@ -91,7 +94,7 @@ namespace MarkPad.ViewModel
 
         private void New()
         {
-            var doc = new LocalDocument(string.Empty);
+            var doc = new LocalDocument();
             Documents.Add(doc);
             SelectedDocument = doc;
         }
@@ -104,7 +107,7 @@ namespace MarkPad.ViewModel
             }
 
             if (Documents.Count == 0)
-                Documents.Add(new LocalDocument("") { Name = "New Doc" });
+                Documents.Add(new LocalDocument());
 
             SelectedDocument = Documents[0];
         }
