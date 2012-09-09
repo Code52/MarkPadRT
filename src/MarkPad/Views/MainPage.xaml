@@ -70,7 +70,9 @@
             <ColumnDefinition Width="40*" x:Name="colPreview" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" Background="White">
-            <TextBlock x:Name="title" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="18,13,0,0" Foreground="#FFBE0606" Style="{StaticResource PageHeaderTextStyle}" Text="MarkPad"/>
+            <Border Background="#FFBE0606"  VerticalAlignment="Top">
+                <TextBlock x:Name="title" HorizontalAlignment="Left" Margin="18,15,0,10" TextWrapping="Wrap" VerticalAlignment="Top"  Foreground="White" Style="{StaticResource PageHeaderTextStyle}" Text="MarkPad"/>
+            </Border>
             <ListBox x:Name="Documents" BorderBrush="{x:Null}" BorderThickness="0" ItemsSource="{Binding Documents}" SelectedItem="{Binding SelectedDocument, Mode=TwoWay}" Margin="18,86,0,0" SelectionChanged="DocumentsSelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
