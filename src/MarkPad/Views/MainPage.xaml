@@ -57,7 +57,7 @@
                     <Button Foreground="White" Style="{StaticResource LinkAppBarButtonStyle}"/>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button x:Name="btnDistraction" Foreground="White" AutomationProperties.Name="Distraction Free" Style="{StaticResource ClosePaneAppBarButtonStyle}" />
+                    <Button x:Name="btnDistraction" Foreground="White" AutomationProperties.Name="Distraction Free" Style="{StaticResource ClosePaneAppBarButtonStyle}" Click="DistractionToggled" />
                 </StackPanel>
             </Grid>
         </AppBar>
@@ -96,6 +96,13 @@
         
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="ApplicationViewStates">
+                <VisualState x:Name="DistractionFree">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="colPreview" Storyboard.TargetProperty="Width">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
                 <VisualState x:Name="FullScreenLandscapeOrWide"/>
                 <VisualState x:Name="FilledOrNarrow" />
 

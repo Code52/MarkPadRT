@@ -152,6 +152,13 @@ namespace MarkPad.Views
         {
             VisualStateManager.GoToState(this, "Snapped", false);
         }
+
+        private bool distraction = true;
+        private void DistractionToggled(object sender, RoutedEventArgs e)
+        {
+            VisualStateManager.GoToState(this, distraction ? "DistractionFree" : "FullScreenLandscapeOrWide", false);
+            distraction = !distraction;
+        }
     }
 
 }
