@@ -110,7 +110,7 @@ namespace MarkPad.ViewModel
                     Messenger.Default.Send(new HideWebviewMessage());
                     _flyout = new SettingsFlyout
                         {
-                            HeaderText = "Markdown Syntax Help",
+                            HeaderText = "Syntax Help",
                             Content = new MarkdownSyntax(),
                             IsOpen = true,
                         };
