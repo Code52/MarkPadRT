@@ -10,18 +10,16 @@ namespace MarkPad.ViewModel
 {
     public class SettingsViewModel : ViewModelBase
     {
-        private const string defaultFont = "Segoe UI";
-        private const int defaultFontSize = 16;
+        private const string DefaultFont = "Segoe UI";
+        private const int DefaultFontSize = 16;
         private double _fontSize;
         private string _selectedFont;
 
         public SettingsViewModel()
         {
             LoadFonts();
-
-
-            _fontSize = defaultFontSize;
-            _selectedFont = defaultFont;
+            _fontSize = DefaultFontSize;
+            _selectedFont = DefaultFont;
         }
 
         public ObservableCollection<string> Fonts { get; set; }
@@ -46,24 +44,27 @@ namespace MarkPad.ViewModel
             }
         }
 
-        private async Task LoadFonts()
+        private void LoadFonts()
         {
-            var x = new List<string>();
-            var factory = new Factory();
-            FontCollection fontCollection = factory.GetSystemFontCollection(false);
-            int familyCount = fontCollection.FontFamilyCount;
-            for (int i = 0; i < familyCount; i++)
-            {
-                FontFamily fontFamily = fontCollection.GetFontFamily(i);
-                LocalizedStrings familyNames = fontFamily.FamilyNames;
-                int index;
-                if (!familyNames.FindLocaleName(CultureInfo.CurrentCulture.Name, out index))
-                    familyNames.FindLocaleName("en-us", out index);
+            Task.Run(() =>
+                {
+                    var x = new List<string>();
+                    var factory = new Factory();
+                    FontCollection fontCollection = factory.GetSystemFontCollection(false);
+                    int familyCount = fontCollection.FontFamilyCount;
+                    for (int i = 0; i < familyCount; i++)
+                    {
+                        FontFamily fontFamily = fontCollection.GetFontFamily(i);
+                        LocalizedStrings familyNames = fontFamily.FamilyNames;
+                        int index;
+                        if (!familyNames.FindLocaleName(CultureInfo.CurrentCulture.Name, out index))
+                            familyNames.FindLocaleName("en-us", out index);
 
-                string name = familyNames.GetString(index);
-                x.Add(name);
-            }
-            Fonts = new ObservableCollection<string>(x.OrderBy(y => y));
+                        string name = familyNames.GetString(index);
+                        x.Add(name);
+                    }
+                    Fonts = new ObservableCollection<string>(x.OrderBy(y => y));
+                });
         }
     }
 }

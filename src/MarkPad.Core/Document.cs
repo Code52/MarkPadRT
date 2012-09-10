@@ -29,6 +29,8 @@ namespace MarkPad.Core
             }
         }
 
+        public abstract string Id { get; }
+
         public string OriginalText
         {
             get { return _originalText; }

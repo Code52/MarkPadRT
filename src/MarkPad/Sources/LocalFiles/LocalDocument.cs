@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using MarkPad.Core;
 using MarkPad.Extensions;
 using Windows.Storage;
@@ -23,7 +24,8 @@ namespace MarkPad.Sources.LocalFiles
             Text = t;
         }
 
-        public LocalDocument() : base ("", "New Document")
+        public LocalDocument()
+            : base("", "New Document")
         {
 
         }
@@ -31,5 +33,7 @@ namespace MarkPad.Sources.LocalFiles
             : base(originalText, fileName)
         {
         }
+
+        public override string Id { get { return Path.Combine(File.Path, File.Name); } }
     }
 }

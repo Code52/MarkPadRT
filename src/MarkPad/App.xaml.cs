@@ -58,7 +58,7 @@ namespace MarkPad
             {
                 var x = new LocalDocument(file);
                 x.Load();
-                locator.Main.Documents.Add(x);
+                locator.Main.Open(x);
             }
 
             var rootFrame = Window.Current.Content as Frame;

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Callisto.Controls;
@@ -13,6 +14,7 @@ using MarkPad.Sources.LocalFiles;
 using MarkPad.Views;
 using MarkdownDeep;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage;
 using Windows.UI.ApplicationSettings;
 using Windows.UI.Popups;
 
@@ -164,12 +166,18 @@ namespace MarkPad.ViewModel
 
         private async Task Open()
         {
-            IEnumerable<Document> files = await _source.Open();
-            foreach (Document f in files)
-            {
-                Documents.Add(f);
-                SelectedDocument = f;
-            }
+            var files = await _source.Open();
+            foreach (var f in files)
+                Open(f);
+        }
+
+        public async Task Open(Document d)
+        {
+            if (Documents.Any(x => x.Name == d.Name && x.Id == d.Id))
+                return;
+
+            Documents.Add(d);
+            SelectedDocument = d;
         }
     }
 }
