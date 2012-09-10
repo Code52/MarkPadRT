@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using GalaSoft.MvvmLight.Messaging;
 using MarkPad.Messages;
 using MarkPad.ViewModel;
@@ -16,8 +17,6 @@ namespace MarkPad.Views
         private MainViewModel ViewModel { get { return (MainViewModel)DataContext; } }
         private readonly DispatcherTimer _timer = new DispatcherTimer();
         private readonly DispatcherTimer _closeWebView = new DispatcherTimer();
-        private const string Css = @"body { background : #eaeaea; font-family: Segoe UI, sans-serif; }";
-        private readonly MarkdownDeep.Markdown _markdown = new MarkdownDeep.Markdown();
         private readonly WebViewBrush _webBrush;
 
         public MainPage()
@@ -71,12 +70,11 @@ namespace MarkPad.Views
 
         void TimerTick(object sender, object e)
         {
+            Debug.WriteLine("tick");
             _timer.Stop();
-
-            string text = "";
             if (ViewModel.SelectedDocument != null)
-                text = ViewModel.SelectedDocument.Text;
-            wv.NavigateToString(string.Format("<html><head><style>{0}</style></head><body>{1}</body></html>", Css, _markdown.Transform(text)));
+                wv.NavigateToString(ViewModel.Transform());
+           
         }
 
         private void TextChanged(object sender, RoutedEventArgs e)

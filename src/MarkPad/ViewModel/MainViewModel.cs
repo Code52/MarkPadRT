@@ -19,11 +19,13 @@ namespace MarkPad.ViewModel
 
     public class MainViewModel : ViewModelBase
     {
+        public SettingsViewModel Settings { get; set; }
         private SettingsFlyout _flyout;
         private readonly LocalSource _source = new LocalSource();
         private ObservableCollection<Document> _documents;
         private Document _selectedDocument;
-
+        private string _html = @"<html><head><style>body {{ background : #eaeaea; font-family: '{0}', sans-serif; font-size: {1}px; }}</style></head><body>{2}</body></html>";
+        private readonly MarkdownDeep.Markdown _markdown = new MarkdownDeep.Markdown();
         public ObservableCollection<Document> Documents
         {
             get { return _documents; }
@@ -50,8 +52,10 @@ namespace MarkPad.ViewModel
         public ICommand NewCommand { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand CloseCommand { get; set; }
-        public MainViewModel()
+
+        public MainViewModel(SettingsViewModel settings)
         {
+            Settings = settings;
             Distraction = true;
             Documents = new ObservableCollection<Document>();
             OpenCommand = new RelayCommand(() => Open());
@@ -75,10 +79,13 @@ namespace MarkPad.ViewModel
             SettingsPane.GetForCurrentView().CommandsRequested += CommandsRequested;
         }
 
-
+        public string Transform()
+        {
+            return string.Format(_html, Settings.SelectedFont, Settings.FontSize, _markdown.Transform(SelectedDocument.Text));
+        }
         private void CommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
         {
-            var cmd = new SettingsCommand("sample", "Settings", (x) =>
+            var cmd = new SettingsCommand("sample", "Settings", x =>
             {
                 Messenger.Default.Send(new HideWebviewMessage());
                 _flyout = new SettingsFlyout
@@ -102,7 +109,7 @@ namespace MarkPad.ViewModel
             DataRequest request = args.Request;
             request.Data.Properties.Title = SelectedDocument.Name;
             request.Data.SetText(SelectedDocument.Text);
-            request.Data.SetHtmlFormat(HtmlFormatHelper.CreateHtmlFormat(new MarkdownDeep.Markdown().Transform(SelectedDocument.Text)));
+            request.Data.SetHtmlFormat(HtmlFormatHelper.CreateHtmlFormat(_markdown.Transform(SelectedDocument.Text)));
         }
 
         private async Task<bool> ShouldSave()

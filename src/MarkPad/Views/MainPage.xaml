@@ -72,11 +72,11 @@
         <Grid Grid.Column="0" Background="White">
             <Border  VerticalAlignment="Top" Height="55">
                 <Grid Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0">
-							<Canvas x:Name="Layer_3" Height="245.516" Canvas.Left="11.742" Canvas.Top="5" Width="262.175">
-				<Path Data="F1M11.7417,250.5156L98.9997,165.5766C98.9997,165.5766,103.6247,165.5766,107.4997,161.1246C110.2627,157.9516,108.9997,154.5416,106.4997,152.6246C103.9997,150.7076,99.6247,150.1006,95.4997,153.4996C90.7887,157.3816,90.9997,162.3336,90.9997,162.3336 M11.7417,250.5156C11.7417,250.5156,38.1407,202.2916,52.6897,137.3446C52.6897,137.3446,120.4537,64.9996,238.9167,4.99960000000002L273.9167,4.99960000000002C273.9167,4.99960000000002,187.1207,109.5916,183.4847,185.9546C183.4847,185.9546,122.4227,205.2736,11.7417,250.5156" Fill="#FFBE0606" Height="48.153" Stretch="Fill" Canvas.Top="-10" Width="51.57" UseLayoutRounding="False" Canvas.Left="13.43"/>
-			</Canvas>
-            		<TextBlock x:Name="title" HorizontalAlignment="Left" Margin="67,-7,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Foreground="#FFBE0606" Style="{StaticResource PageHeaderTextStyle}" Text="MarkPad" FontSize="48"/>
-            	</Grid>
+                    <Canvas x:Name="Layer_3" Height="245.516" Canvas.Left="11.742" Canvas.Top="5" Width="262.175">
+                        <Path Data="F1M11.7417,250.5156L98.9997,165.5766C98.9997,165.5766,103.6247,165.5766,107.4997,161.1246C110.2627,157.9516,108.9997,154.5416,106.4997,152.6246C103.9997,150.7076,99.6247,150.1006,95.4997,153.4996C90.7887,157.3816,90.9997,162.3336,90.9997,162.3336 M11.7417,250.5156C11.7417,250.5156,38.1407,202.2916,52.6897,137.3446C52.6897,137.3446,120.4537,64.9996,238.9167,4.99960000000002L273.9167,4.99960000000002C273.9167,4.99960000000002,187.1207,109.5916,183.4847,185.9546C183.4847,185.9546,122.4227,205.2736,11.7417,250.5156" Fill="#FFBE0606" Height="48.153" Stretch="Fill" Canvas.Top="-10" Width="51.57" UseLayoutRounding="False" Canvas.Left="13.43"/>
+                    </Canvas>
+                    <TextBlock x:Name="title" HorizontalAlignment="Left" Margin="67,-7,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  Foreground="#FFBE0606" Style="{StaticResource PageHeaderTextStyle}" Text="MarkPad" FontSize="48"/>
+                </Grid>
             </Border>
             <ListBox x:Name="Documents" BorderBrush="{x:Null}" BorderThickness="0" ItemsSource="{Binding Documents}" SelectedItem="{Binding SelectedDocument, Mode=TwoWay}" Margin="18,86,0,0" SelectionChanged="DocumentsSelectionChanged">
                 <ListBox.ItemTemplate>
@@ -90,15 +90,15 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-        
-        <RichEditBox x:Name="Editor" Grid.Column="1" Background="#f9f9f9" BorderThickness="0" BorderBrush="{x:Null}" Padding="25, 25, 25, 0" TextChanged="TextChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" AcceptsReturn="True"  />
+
+        <RichEditBox x:Name="Editor" Grid.Column="1" FontFamily="{Binding Settings.SelectedFont}" FontSize="{Binding ElementName=Editor, Path=DataContext.Settings.FontSize}" Background="#f9f9f9" BorderThickness="0" BorderBrush="{x:Null}" Padding="25, 25, 25, 0" TextChanged="TextChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" AcceptsReturn="True"  />
         <Border Background="#eaeaea" Grid.Column="2" >
             <WebView x:Name="wv" Margin="15,15,15,0" />
         </Border>
         <Rectangle x:Name="webRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2"  Margin="15,15,15,0" />
         <Button Content="Preview" x:Name="btnPreview" Visibility="Collapsed" Click="BtnPreviewClicked" Grid.Column="1" Margin="0,0,0,734"/>
         <Button Content="editor" x:Name="btnEditor" Grid.Column="2" Visibility="Collapsed" Click="BtnEditorClicked"  VerticalAlignment="Top"/>
-        
+
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="ApplicationViewStates">
                 <VisualState x:Name="DistractionFree">
@@ -131,11 +131,11 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnPreview" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
                         </ObjectAnimationUsingKeyFrames>
-                        
+
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnDistraction" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
                         </ObjectAnimationUsingKeyFrames>
-                        
+
                     </Storyboard>
                 </VisualState>
 
@@ -144,7 +144,7 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="colFiles" Storyboard.TargetProperty="Width">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
                         </ObjectAnimationUsingKeyFrames>
-                        
+
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="colEditor" Storyboard.TargetProperty="Width">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="0" />
                         </ObjectAnimationUsingKeyFrames>
@@ -157,20 +157,20 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnEditor" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
                         </ObjectAnimationUsingKeyFrames>
-                        
+
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="webRectangle">
-                        	<DiscreteObjectKeyFrame KeyTime="0">
-                        		<DiscreteObjectKeyFrame.Value>
-                        			<Thickness>15,39,15,0</Thickness>
-                        		</DiscreteObjectKeyFrame.Value>
-                        	</DiscreteObjectKeyFrame>
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Thickness>15,39,15,0</Thickness>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
                         </ObjectAnimationUsingKeyFrames>
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="wv">
-                        	<DiscreteObjectKeyFrame KeyTime="0">
-                        		<DiscreteObjectKeyFrame.Value>
-                        			<Thickness>15,39,15,0</Thickness>
-                        		</DiscreteObjectKeyFrame.Value>
-                        	</DiscreteObjectKeyFrame>
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Thickness>15,39,15,0</Thickness>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
                         </ObjectAnimationUsingKeyFrames>
 
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnDistraction" Storyboard.TargetProperty="Visibility">

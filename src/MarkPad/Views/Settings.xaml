@@ -2,7 +2,6 @@
     x:Class="MarkPad.Views.Settings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:MarkPad.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -10,12 +9,12 @@
     d:DesignWidth="400"
         DataContext="{Binding Source={StaticResource Locator}, Path=Settings}">
 
-    <StackPanel>
+    <StackPanel Width="250">
         <TextBlock Text="Editor Font Size" />
-        <Slider />
+        <Slider Value="{Binding FontSize, Mode=TwoWay}" Minimum="8" Maximum="72" />
 
         <TextBlock Text="Editor Font" />
-        <ComboBox ItemsSource="{Binding Fonts}">
+        <ComboBox ItemsSource="{Binding Fonts}" SelectedItem="{Binding SelectedFont, Mode=TwoWay}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding }" FontFamily="{Binding }"/>
