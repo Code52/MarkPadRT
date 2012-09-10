@@ -136,7 +136,7 @@ namespace MarkPad.ViewModel
 
             var d = new MessageDialog("Do you want to save this file before closing?");
             d.Commands.Add(new UICommand("Yes", command => tcs.SetResult(true)));
-            d.Commands.Add(new UICommand("Close", command => tcs.SetResult(false)));
+            d.Commands.Add(new UICommand("No", command => tcs.SetResult(false)));
             d.DefaultCommandIndex = 0;
             d.CancelCommandIndex = 1;
             await d.ShowAsync();
