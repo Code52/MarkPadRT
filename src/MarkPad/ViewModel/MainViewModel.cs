@@ -24,7 +24,7 @@ namespace MarkPad.ViewModel
         private readonly LocalSource _source = new LocalSource();
         private ObservableCollection<Document> _documents;
         private Document _selectedDocument;
-        private string _html = @"<html><head><style>body {{ background : #eaeaea; font-family: '{0}', sans-serif; font-size: {1}px; }}</style></head><body>{2}</body></html>";
+        private const string Html = @"<html><head><style>body {{ background : #eaeaea; font-family: '{0}', sans-serif; font-size: {1}px; }}</style></head><body>{2}</body></html>";
         private readonly MarkdownDeep.Markdown _markdown = new MarkdownDeep.Markdown();
         public ObservableCollection<Document> Documents
         {
@@ -81,11 +81,11 @@ namespace MarkPad.ViewModel
 
         public string Transform()
         {
-            return string.Format(_html, Settings.SelectedFont, Settings.FontSize, _markdown.Transform(SelectedDocument.Text));
+            return string.Format(Html, Settings.SelectedFont, Settings.FontSize, _markdown.Transform(SelectedDocument.Text));
         }
         private void CommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
         {
-            var cmd = new SettingsCommand("sample", "Settings", x =>
+            var cmd = new SettingsCommand("settings", "Settings", x =>
             {
                 Messenger.Default.Send(new HideWebviewMessage());
                 _flyout = new SettingsFlyout
@@ -99,6 +99,18 @@ namespace MarkPad.ViewModel
             });
 
             args.Request.ApplicationCommands.Add(cmd);
+            args.Request.ApplicationCommands.Add(new SettingsCommand("help", "Markdown Help", x =>
+                {
+                    Messenger.Default.Send(new HideWebviewMessage());
+                    _flyout = new SettingsFlyout
+                    {
+                        HeaderText = "Markdown Syntax Help",
+                        Content = new MarkdownSyntax(),
+                        IsOpen = true,
+                    };
+
+                    _flyout.Closed += (s, e) => Messenger.Default.Send(new ShowWebViewMessage());
+                }));
         }
 
         private void ShareRequested(DataTransferManager sender, DataRequestedEventArgs args)

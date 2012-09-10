@@ -8,56 +8,58 @@
     mc:Ignorable="d"
     d:DesignHeight="500"
     d:DesignWidth="400">
-    
+
     <Grid>
-        <TextBlock FontFamily="Global User Interface">
-## Text Formatting<LineBreak />
-<LineBreak />
-This is how to do **bold** text.<LineBreak />
-This is how to do *italic* text.<LineBreak />
-You can also do __bold__ like this.<LineBreak />
-You can also do _italic_ like this.<LineBreak />
-<LineBreak />
-> This is how to make a blockquote<LineBreak />
-<LineBreak />
-## Links<LineBreak />
-<LineBreak />
-For a full description of the markdown syntax, visit [this page](http://daringfireball.net/projects/markdown/syntax)<LineBreak />
-<LineBreak />
-## Lists<LineBreak />
-<LineBreak />
-Unordered lists:<LineBreak />
-<LineBreak />
-* item 1<LineBreak />
-+ item 2<LineBreak />
-- item 3<LineBreak />
-<LineBreak />
-Ordered lists:<LineBreak />
-<LineBreak />
-1. hello<LineBreak />
-2. world<LineBreak />
-<LineBreak />
-Nested lists<LineBreak />
-<LineBreak />
-* a<LineBreak />
-<Run Text="    * b" /><LineBreak />
-    * c<LineBreak />
-* d<LineBreak />
-<LineBreak />
-## Code<LineBreak />
-<LineBreak />
-    var x = new Foo();<LineBreak />
-    x.Bar();<LineBreak />
-<LineBreak />
-# This is an H1<LineBreak />
-<LineBreak />
-## This is an H2<LineBreak />
-<LineBreak />
-This is also an H1<LineBreak />
-===========<LineBreak />
-<LineBreak />
-This is also an H2<LineBreak />
-------------------<LineBreak />
-        </TextBlock>
+        <ScrollViewer>
+            <TextBlock FontFamily="Global User Interface">
+                ## Text Formatting<LineBreak />
+                <LineBreak />
+                This is how to do **bold** text.<LineBreak />
+                This is how to do *italic* text.<LineBreak />
+                You can also do __bold__ like this.<LineBreak />
+                You can also do _italic_ like this.<LineBreak />
+                <LineBreak />
+                > This is how to make a blockquote<LineBreak />
+                <LineBreak />
+                ## Links<LineBreak />
+                <LineBreak />
+                For a full description of the markdown syntax, visit [this page](http://daringfireball.net/projects/markdown/syntax)<LineBreak />
+                <LineBreak />
+                ## Lists<LineBreak />
+                <LineBreak />
+                Unordered lists:<LineBreak />
+                <LineBreak />
+                * item 1<LineBreak />
+                + item 2<LineBreak />
+                - item 3<LineBreak />
+                <LineBreak />
+                Ordered lists:<LineBreak />
+                <LineBreak />
+                1. hello<LineBreak />
+                2. world<LineBreak />
+                <LineBreak />
+                Nested lists<LineBreak />
+                <LineBreak />
+                * a<LineBreak />
+                <Run Text="    * b" /><LineBreak />
+                    * c<LineBreak />
+                * d<LineBreak />
+                <LineBreak />
+                ## Code<LineBreak />
+                <LineBreak />
+                    var x = new Foo();<LineBreak />
+                    x.Bar();<LineBreak />
+                <LineBreak />
+                # This is an H1<LineBreak />
+                <LineBreak />
+                ## This is an H2<LineBreak />
+                <LineBreak />
+                This is also an H1<LineBreak />
+                ===========<LineBreak />
+                <LineBreak />
+                This is also an H2<LineBreak />
+                ------------------<LineBreak />
+            </TextBlock>
+        </ScrollViewer>
     </Grid>
 </UserControl>

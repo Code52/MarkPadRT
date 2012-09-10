@@ -152,11 +152,6 @@ namespace MarkPad.Views
             return viewState == ApplicationViewState.FullScreenPortrait || viewState == ApplicationViewState.Snapped;
         }
 
-        protected override void GoBack(object sender, RoutedEventArgs e)
-        {
-            base.GoBack(sender, e);
-        }
-
         protected override string DetermineVisualState(ApplicationViewState viewState)
         {
             var logicalPageBack = UsingLogicalPageNavigation(viewState);// && this.itemListView.SelectedItem != null;
