@@ -10,8 +10,19 @@ namespace MarkPad.ViewModel
 {
     public class SettingsViewModel : ViewModelBase
     {
-        private string _selectedFont;
+        private const string defaultFont = "Segoe UI";
+        private const int defaultFontSize = 16;
         private double _fontSize;
+        private string _selectedFont;
+
+        public SettingsViewModel()
+        {
+            LoadFonts();
+
+
+            _fontSize = defaultFontSize;
+            _selectedFont = defaultFont;
+        }
 
         public ObservableCollection<string> Fonts { get; set; }
 
@@ -35,26 +46,16 @@ namespace MarkPad.ViewModel
             }
         }
 
-        public SettingsViewModel()
-        {
-            LoadFonts();
-            var defaultFont = "Segoe UI";
-            var defaultFontSize = 36;
-
-            _fontSize = defaultFontSize;
-            _selectedFont = defaultFont;
-        }
-
         private async Task LoadFonts()
         {
             var x = new List<string>();
             var factory = new Factory();
-            var fontCollection = factory.GetSystemFontCollection(false);
-            var familyCount = fontCollection.FontFamilyCount;
+            FontCollection fontCollection = factory.GetSystemFontCollection(false);
+            int familyCount = fontCollection.FontFamilyCount;
             for (int i = 0; i < familyCount; i++)
             {
-                var fontFamily = fontCollection.GetFontFamily(i);
-                var familyNames = fontFamily.FamilyNames;
+                FontFamily fontFamily = fontCollection.GetFontFamily(i);
+                LocalizedStrings familyNames = fontFamily.FamilyNames;
                 int index;
                 if (!familyNames.FindLocaleName(CultureInfo.CurrentCulture.Name, out index))
                     familyNames.FindLocaleName("en-us", out index);
