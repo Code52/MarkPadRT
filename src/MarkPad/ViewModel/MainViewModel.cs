@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -10,48 +11,21 @@ using MarkPad.Core;
 using MarkPad.Messages;
 using MarkPad.Sources.LocalFiles;
 using MarkPad.Views;
+using MarkdownDeep;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.ApplicationSettings;
 using Windows.UI.Popups;
 
 namespace MarkPad.ViewModel
 {
-
     public class MainViewModel : ViewModelBase
     {
-        public SettingsViewModel Settings { get; set; }
-        private SettingsFlyout _flyout;
+        private const string Html = @"<html><head><style>body {{ background : #eaeaea; font-family: '{0}', sans-serif; font-size: {1}px; }}</style></head><body>{2}</body></html>";
+        private readonly Markdown _markdown = new Markdown();
         private readonly LocalSource _source = new LocalSource();
         private ObservableCollection<Document> _documents;
+        private SettingsFlyout _flyout;
         private Document _selectedDocument;
-        private const string Html = @"<html><head><style>body {{ background : #eaeaea; font-family: '{0}', sans-serif; font-size: {1}px; }}</style></head><body>{2}</body></html>";
-        private readonly MarkdownDeep.Markdown _markdown = new MarkdownDeep.Markdown();
-        public ObservableCollection<Document> Documents
-        {
-            get { return _documents; }
-            set
-            {
-                _documents = value;
-                RaisePropertyChanged(() => Documents);
-            }
-        }
-
-        public bool Distraction { get; set; }
-
-        public Document SelectedDocument
-        {
-            get { return _selectedDocument; }
-            set
-            {
-                _selectedDocument = value;
-                RaisePropertyChanged(() => SelectedDocument);
-            }
-        }
-
-        public ICommand OpenCommand { get; set; }
-        public ICommand NewCommand { get; set; }
-        public ICommand SaveCommand { get; set; }
-        public ICommand CloseCommand { get; set; }
 
         public MainViewModel(SettingsViewModel settings)
         {
@@ -79,35 +53,65 @@ namespace MarkPad.ViewModel
             SettingsPane.GetForCurrentView().CommandsRequested += CommandsRequested;
         }
 
+        public SettingsViewModel Settings { get; set; }
+
+        public ObservableCollection<Document> Documents
+        {
+            get { return _documents; }
+            set
+            {
+                _documents = value;
+                RaisePropertyChanged(() => Documents);
+            }
+        }
+
+        public bool Distraction { get; set; }
+
+        public Document SelectedDocument
+        {
+            get { return _selectedDocument; }
+            set
+            {
+                _selectedDocument = value;
+                RaisePropertyChanged(() => SelectedDocument);
+            }
+        }
+
+        public ICommand OpenCommand { get; set; }
+        public ICommand NewCommand { get; set; }
+        public ICommand SaveCommand { get; set; }
+        public ICommand CloseCommand { get; set; }
+
         public string Transform()
         {
             return string.Format(Html, Settings.SelectedFont, Settings.FontSize, _markdown.Transform(SelectedDocument.Text));
         }
+
         private void CommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)
         {
             var cmd = new SettingsCommand("settings", "Settings", x =>
-            {
-                Messenger.Default.Send(new HideWebviewMessage());
-                _flyout = new SettingsFlyout
                 {
-                    HeaderText = "Settings",
-                    Content = new Settings(),
-                    IsOpen = true,
-                };
+                    Messenger.Default.Send(new HideWebviewMessage());
+                    _flyout = new SettingsFlyout
+                        {
+                            HeaderText = "Settings",
+                            Content = new Settings(),
+                            IsOpen = true,
+                        };
 
-                _flyout.Closed += (s, e) => Messenger.Default.Send(new ShowWebViewMessage());
-            });
+                    _flyout.Closed += (s, e) => Messenger.Default.Send(new ShowWebViewMessage());
+                });
 
             args.Request.ApplicationCommands.Add(cmd);
             args.Request.ApplicationCommands.Add(new SettingsCommand("help", "Markdown Help", x =>
                 {
                     Messenger.Default.Send(new HideWebviewMessage());
                     _flyout = new SettingsFlyout
-                    {
-                        HeaderText = "Markdown Syntax Help",
-                        Content = new MarkdownSyntax(),
-                        IsOpen = true,
-                    };
+                        {
+                            HeaderText = "Markdown Syntax Help",
+                            Content = new MarkdownSyntax(),
+                            IsOpen = true,
+                        };
 
                     _flyout.Closed += (s, e) => Messenger.Default.Send(new ShowWebViewMessage());
                 }));
@@ -147,7 +151,7 @@ namespace MarkPad.ViewModel
 
         private async Task Load()
         {
-            foreach (var d in await _source.Restore())
+            foreach (Document d in await _source.Restore())
             {
                 Documents.Add(d);
             }
@@ -160,8 +164,8 @@ namespace MarkPad.ViewModel
 
         private async Task Open()
         {
-            var files = await _source.Open();
-            foreach (var f in files)
+            IEnumerable<Document> files = await _source.Open();
+            foreach (Document f in files)
             {
                 Documents.Add(f);
                 SelectedDocument = f;
