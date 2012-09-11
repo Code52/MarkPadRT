@@ -175,16 +175,19 @@
     <Reference Include="Callisto">
       <HintPath>..\packages\Callisto.1.2.1\lib\winrt45\Callisto.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Extras.Win8">
+    <Reference Include="GalaSoft.MvvmLight.Extras.Win8, Version=4.0.23.35608, Culture=neutral, PublicKeyToken=33a77f5c33c10a68, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MvvmLight.4.1.23.0\lib\winrt45\GalaSoft.MvvmLight.Extras.Win8.dll</HintPath>
     </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Win8">
+    <Reference Include="GalaSoft.MvvmLight.Win8, Version=4.0.23.35608, Culture=neutral, PublicKeyToken=7f0ea4153a3589fc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MvvmLight.4.1.23.0\lib\winrt45\GalaSoft.MvvmLight.Win8.dll</HintPath>
     </Reference>
     <Reference Include="MarkdownDeep">
       <HintPath>..\..\lib\MarkdownDeep.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2640593d4a7d90bb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MvvmLight.4.1.23.0\lib\winrt45\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
