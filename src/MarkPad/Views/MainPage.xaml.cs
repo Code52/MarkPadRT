@@ -96,12 +96,12 @@ namespace MarkPad.Views
 
         private void BoldClicked(object sender, RoutedEventArgs e)
         {
-            TransformText(s => "*" + s + "*");
+            TransformText(s => "**" + s + "**");
         }
 
         private void ItalicClicked(object sender, RoutedEventArgs e)
         {
-            TransformText(s => "**" + s + "**");
+            TransformText(s => "*" + s + "*");
         }
 
         private void HeaderClicked(object sender, RoutedEventArgs e)
