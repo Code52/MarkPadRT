@@ -81,11 +81,16 @@
             <ListBox x:Name="Documents" BorderBrush="{x:Null}" BorderThickness="0" ItemsSource="{Binding Documents}" SelectedItem="{Binding SelectedDocument, Mode=TwoWay}" Margin="18,0,0,0" SelectionChanged="DocumentsSelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Name}" TextTrimming="WordEllipsis" Width="180" />
-                            <TextBlock Text="&#xE236;" Margin="0,-5,0,0" FontFamily="Segoe UI Symbol" Visibility="{Binding IsModified, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                            <Button Command="{Binding ElementName=Documents, Path=DataContext.CloseCommand}" CommandParameter="{Binding }" Content="&#xE21C;" FontFamily="Segoe UI Symbol"  Margin="0,-5,0,0" Padding="0" Foreground="White"/>
-                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition Width="10" />
+                                <ColumnDefinition Width="15"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding Name}" TextTrimming="WordEllipsis" VerticalAlignment="Center" />
+                            <TextBlock Grid.Column="1" Text="&#xE236;" Margin="0,-5,0,0" FontFamily="Segoe UI Symbol" Visibility="{Binding IsModified, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            <Button Grid.Column="2" Command="{Binding ElementName=Documents, Path=DataContext.CloseCommand}" CommandParameter="{Binding }" Content="&#xE21C;" FontFamily="Segoe UI Symbol"  Margin="0,0,-10,0" Padding="0" Foreground="White" VerticalAlignment="Center"/>
+                        </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
