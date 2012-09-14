@@ -9,6 +9,7 @@ using Windows.UI.Text;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace MarkPad.Views
@@ -19,6 +20,7 @@ namespace MarkPad.Views
         private readonly DispatcherTimer _timer = new DispatcherTimer();
         private readonly DispatcherTimer _closeWebView = new DispatcherTimer();
         private readonly WebViewBrush _webBrush;
+        private bool _isCtrlKeyPressed;
 
         public MainPage()
         {
@@ -44,6 +46,46 @@ namespace MarkPad.Views
             Messenger.Default.Register<HideWebviewMessage>(this, o => SwitchWebViewForWebViewBrush());
             Messenger.Default.Register<ShowWebViewMessage>(this, o => SwitchWebViewBrushForWebView());
         }
+
+        protected override void OnKeyDown(KeyRoutedEventArgs e)
+        {
+            base.OnKeyDown(e);
+            if (e.Key == VirtualKey.Control)
+            {
+                _isCtrlKeyPressed = true;
+                return;
+            }
+
+            if (!_isCtrlKeyPressed) 
+                return;
+
+            switch (e.Key)
+            {
+                case VirtualKey.N:
+                    SafelyExecute(ViewModel.NewCommand);
+                    break;
+                case VirtualKey.O:
+                    SafelyExecute(ViewModel.OpenCommand);
+                    break;
+                case VirtualKey.S:
+                    SafelyExecute(ViewModel.SaveCommand);
+                    break;
+            }
+        }
+
+        private void SafelyExecute(System.Windows.Input.ICommand command)
+        {
+            if (command.CanExecute(null))
+                command.Execute(null);
+        }
+
+        protected override void OnKeyUp(KeyRoutedEventArgs e)
+        {
+            base.OnKeyUp(e);
+            if (e.Key == VirtualKey.Control)
+                _isCtrlKeyPressed = false;
+        }
+
 
         private void SwitchWebViewBrushForWebView()
         {
