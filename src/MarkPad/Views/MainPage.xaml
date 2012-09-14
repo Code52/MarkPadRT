@@ -14,7 +14,8 @@
     <Common:LayoutAwarePage.TopAppBar>
         <AppBar  Background="#494949">
             <StackPanel Orientation="Horizontal">
-                <Button Width="100" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Command="{Binding NewCommand}">
+                <Button Width="100" Height="100" Foreground="White" VerticalContentAlignment="Bottom" Command="{Binding NewCommand}"
+                        AutomationProperties.AcceleratorKey="CTRL+N">
                     <StackPanel>
                         <TextBlock FontFamily="Segoe UI Symbol" Text="&#xE109;" FontSize="45" />
                         <TextBlock Text="New" HorizontalAlignment="Center" />
