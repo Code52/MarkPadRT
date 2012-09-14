@@ -726,7 +726,11 @@
     </Style>
 
     -->
-
+    <Style x:Key="PinAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
+        <Setter Property="AutomationProperties.AutomationId" Value="PinAppBarButton"/>
+        <Setter Property="AutomationProperties.Name" Value="Pin"/>
+        <Setter Property="Content" Value="&#xE141;"/>
+    </Style>
     <!--
 
     <Style x:Key="RenameAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
@@ -734,11 +738,7 @@
         <Setter Property="AutomationProperties.Name" Value="Rename"/>
         <Setter Property="Content" Value="&#xE13E;"/>
     </Style>
-    <Style x:Key="PinAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
-        <Setter Property="AutomationProperties.AutomationId" Value="PinAppBarButton"/>
-        <Setter Property="AutomationProperties.Name" Value="Pin"/>
-        <Setter Property="Content" Value="&#xE141;"/>
-    </Style>
+  
     <Style x:Key="MusicInfoAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="MusicInfoAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Music Info"/>

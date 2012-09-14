@@ -48,6 +48,7 @@ namespace MarkPad.ViewModel
                     if (Documents.Count == 0)
                         New();
                 });
+            PinCommand = new RelayCommand(() => PinDocument(SelectedDocument));
             Load();
 
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
@@ -83,6 +84,7 @@ namespace MarkPad.ViewModel
         public ICommand NewCommand { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand CloseCommand { get; set; }
+        public ICommand PinCommand { get; set; }
 
         public string Transform()
         {

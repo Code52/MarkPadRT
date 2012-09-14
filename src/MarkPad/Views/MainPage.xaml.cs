@@ -113,11 +113,9 @@ namespace MarkPad.Views
 
         void TimerTick(object sender, object e)
         {
-            Debug.WriteLine("tick");
             _timer.Stop();
             if (ViewModel.SelectedDocument != null)
                 wv.NavigateToString(ViewModel.Transform());
-
         }
 
         private void TextChanged(object sender, RoutedEventArgs e)
@@ -214,7 +212,7 @@ namespace MarkPad.Views
             return logicalPageBack ? defaultStateName + "_Detail" : defaultStateName;
         }
 
-        private void Editor_KeyDown_1(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        private void EditorKeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key != VirtualKey.Tab)
                 return;

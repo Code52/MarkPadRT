@@ -56,6 +56,7 @@
                     <Button Foreground="White" Style="{StaticResource ItalicAppBarButtonStyle}"  Click="ItalicClicked"/>
                     <Button Foreground="White" Style="{StaticResource FontIncreaseAppBarButtonStyle}" Click="HeaderClicked" />
                     <Button Foreground="White" Style="{StaticResource LinkAppBarButtonStyle}"/>
+                    <Button Foreground="White" Style="{StaticResource PinAppBarButtonStyle}" Command="{Binding PinCommand}"/>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                     <Button x:Name="btnDistraction" Foreground="White" AutomationProperties.Name="Distraction Free" Style="{StaticResource ClosePaneAppBarButtonStyle}" Click="DistractionToggled" />
@@ -97,7 +98,7 @@
             </ListBox>
         </Grid>
 
-        <RichEditBox x:Name="Editor" Grid.Column="1" FontFamily="{Binding Settings.SelectedFont}" FontSize="{Binding ElementName=Editor, Path=DataContext.Settings.FontSize}" Background="#f9f9f9" BorderThickness="0" BorderBrush="{x:Null}" Padding="25, 25, 25, 0" KeyDown="Editor_KeyDown_1" TextChanged="TextChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" AcceptsReturn="True"  />
+        <RichEditBox x:Name="Editor" Grid.Column="1" FontFamily="{Binding Settings.SelectedFont}" FontSize="{Binding ElementName=Editor, Path=DataContext.Settings.FontSize}" Background="#f9f9f9" BorderThickness="0" BorderBrush="{x:Null}" Padding="25, 25, 25, 0" KeyDown="EditorKeyDown" TextChanged="TextChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" AcceptsReturn="True"  />
         <Border x:Name="border" Background="#eaeaea" Grid.Column="2" >
             <Grid  Margin="15,15,15,0">
                 <WebView x:Name="wv" IsHitTestVisible="False" />
