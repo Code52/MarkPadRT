@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +16,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.UI.ApplicationSettings;
 using Windows.UI.Popups;
+using Windows.UI.StartScreen;
 
 namespace MarkPad.ViewModel
 {
@@ -105,18 +105,14 @@ namespace MarkPad.ViewModel
                 });
 
             args.Request.ApplicationCommands.Add(cmd);
-            args.Request.ApplicationCommands.Add(new SettingsCommand("help", "Markdown Help", x =>
-                {
-                    Messenger.Default.Send(new HideWebviewMessage());
-                    _flyout = new SettingsFlyout
-                        {
-                            HeaderText = "Syntax Help",
-                            Content = new MarkdownSyntax(),
-                            IsOpen = true,
-                        };
+            args.Request.ApplicationCommands.Add(new SettingsCommand("help", "Markdown Help", x => ShowHelp()));
+        }
 
-                    _flyout.Closed += (s, e) => Messenger.Default.Send(new ShowWebViewMessage());
-                }));
+        private async Task ShowHelp()
+        {
+            var doc = new LocalDocument(await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Help.md")));
+            await doc.Load();
+            Open(doc);
         }
 
         private void ShareRequested(DataTransferManager sender, DataRequestedEventArgs args)
@@ -178,6 +174,21 @@ namespace MarkPad.ViewModel
 
             Documents.Add(d);
             SelectedDocument = d;
+        }
+
+        public async Task PinDocument(Document d)
+        {
+            string tileActivationArguments = d.Id;
+
+            try
+            {
+                var secondaryTile = new SecondaryTile("AppSecondaryTile", d.Name, d.Name, tileActivationArguments, TileOptions.ShowNameOnLogo,  new Uri("ms-appx:///assets/Logo.png"));
+                secondaryTile.RequestCreateAsync();
+            }
+            catch (Exception o_0)
+            {
+
+            }
         }
     }
 }

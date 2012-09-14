@@ -4,6 +4,7 @@ using System.Diagnostics;
 using GalaSoft.MvvmLight.Messaging;
 using MarkPad.Messages;
 using MarkPad.ViewModel;
+using Windows.System;
 using Windows.UI.Text;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -25,12 +26,12 @@ namespace MarkPad.Views
             _timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
             _timer.Tick += TimerTick;
             _closeWebView.Interval = new TimeSpan(0, 0, 0, 0, 500);
-            _closeWebView.Tick +=(s, e) =>
+            _closeWebView.Tick += (s, e) =>
                 {
                     _closeWebView.Stop();
                     wv.Visibility = Visibility.Visible;
                     webRectangle.Visibility = Visibility.Collapsed;
-                
+
                 };
             wv.LoadCompleted += wv_LoadCompleted;
             BottomAppBar.Opened += (s, e) => SwitchWebViewForWebViewBrush();
@@ -74,7 +75,7 @@ namespace MarkPad.Views
             _timer.Stop();
             if (ViewModel.SelectedDocument != null)
                 wv.NavigateToString(ViewModel.Transform());
-           
+
         }
 
         private void TextChanged(object sender, RoutedEventArgs e)
@@ -169,6 +170,23 @@ namespace MarkPad.Views
             var defaultStateName = base.DetermineVisualState(viewState);
             return defaultStateName;
             return logicalPageBack ? defaultStateName + "_Detail" : defaultStateName;
+        }
+
+        private void Editor_KeyDown_1(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (e.Key != VirtualKey.Tab)
+                return;
+
+            var t = sender as RichEditBox;
+            if (t == null)
+                return;
+
+            string selection;
+            t.Document.Selection.GetText(TextGetOptions.None, out selection);
+            t.Document.Selection.SetText(TextSetOptions.None, "\t" + selection);
+            t.Document.Selection.StartPosition += 1;
+            t.Document.Selection.EndPosition = t.Document.Selection.StartPosition;
+            e.Handled = true;
         }
     }
 }
