@@ -5,11 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using SharpDX.DirectWrite;
+using Windows.Storage;
 
 namespace MarkPad.ViewModel
 {
     public class SettingsViewModel : ViewModelBase
     {
+        readonly ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings.CreateContainer("Settings", ApplicationDataCreateDisposition.Always);
         private const string DefaultFont = "Segoe UI";
         private const int DefaultFontSize = 16;
         private double _fontSize;
@@ -18,8 +20,16 @@ namespace MarkPad.ViewModel
         public SettingsViewModel()
         {
             LoadFonts();
-            _fontSize = DefaultFontSize;
-            _selectedFont = DefaultFont;
+            if (!_localSettings.Values.ContainsKey("FontSize"))
+            {
+                _localSettings.Values.Add("FontSize", DefaultFontSize);
+            }
+            if (!_localSettings.Values.ContainsKey("Font"))
+            {
+                _localSettings.Values.Add("Font", DefaultFont);
+            }
+            _fontSize = (double)_localSettings.Values["FontSize"];
+            _selectedFont = (string)_localSettings.Values["Font"];
         }
 
         public ObservableCollection<string> Fonts { get; set; }
@@ -30,6 +40,7 @@ namespace MarkPad.ViewModel
             set
             {
                 _selectedFont = value;
+                _localSettings.Values["Font"] = value;
                 RaisePropertyChanged(() => SelectedFont);
             }
         }
@@ -40,6 +51,7 @@ namespace MarkPad.ViewModel
             set
             {
                 _fontSize = value;
+                _localSettings.Values["FontSize"] = value;
                 RaisePropertyChanged(() => FontSize);
             }
         }
