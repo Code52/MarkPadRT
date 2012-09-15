@@ -145,11 +145,6 @@ namespace MarkPad.Views
             TransformText(s => "*" + s + "*");
         }
 
-        private void HeaderClicked(object sender, RoutedEventArgs e)
-        {
-            TransformText(s => "#" + s);
-        }
-
         private void TransformText(Func<string, string> transform)
         {
             string selection;

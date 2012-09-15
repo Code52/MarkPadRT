@@ -13,23 +13,34 @@ namespace MarkPad.ViewModel
     {
         readonly ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings.CreateContainer("Settings", ApplicationDataCreateDisposition.Always);
         private const string DefaultFont = "Segoe UI";
-        private const int DefaultFontSize = 16;
+        private const double DefaultFontSize = 16.0;
         private double _fontSize;
         private string _selectedFont;
 
         public SettingsViewModel()
         {
             LoadFonts();
-            if (!_localSettings.Values.ContainsKey("FontSize"))
-            {
-                _localSettings.Values.Add("FontSize", DefaultFontSize);
-            }
-            if (!_localSettings.Values.ContainsKey("Font"))
-            {
-                _localSettings.Values.Add("Font", DefaultFont);
-            }
-            _fontSize = (double)_localSettings.Values["FontSize"];
+            SetDefaults();
             _selectedFont = (string)_localSettings.Values["Font"];
+        }
+
+        private void SetDefaults()
+        {
+            if (!_localSettings.Values.ContainsKey("FontSize"))
+                _localSettings.Values.Add("FontSize", DefaultFontSize);
+
+            if (!_localSettings.Values.ContainsKey("Font"))
+                _localSettings.Values.Add("Font", DefaultFont);
+
+            try
+            {
+                _fontSize = (double)_localSettings.Values["FontSize"];
+            }
+            catch
+            {
+                _localSettings.Values.Remove("FontSize");
+                SetDefaults();
+            }
         }
 
         public ObservableCollection<string> Fonts { get; set; }
