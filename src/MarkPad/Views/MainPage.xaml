@@ -15,16 +15,16 @@
         <AppBar  Background="#494949">
             <Grid>
                 <StackPanel Orientation="Horizontal">
-                    <Button Foreground="White" Style="{StaticResource BoldAppBarButtonStyle}" Click="BoldClicked" />
-                    <Button Foreground="White" Style="{StaticResource ItalicAppBarButtonStyle}"  Click="ItalicClicked"/>
-                    <Button Foreground="White" Style="{StaticResource FontIncreaseAppBarButtonStyle}" Click="HeaderClicked" />
-                    <Button Foreground="White" Style="{StaticResource LinkAppBarButtonStyle}"/>
-                    <Button Foreground="White" Style="{StaticResource PinAppBarButtonStyle}" Command="{Binding PinCommand}"/>
+                    <Button x:Name="btnBold" Foreground="White" Style="{StaticResource BoldAppBarButtonStyle}" Click="BoldClicked" />
+                    <Button x:Name="btnItalic" Foreground="White" Style="{StaticResource ItalicAppBarButtonStyle}"  Click="ItalicClicked"/>
+                    <Button x:Name="btnLink" Foreground="White" Style="{StaticResource LinkAppBarButtonStyle}"/>
+                    <Button x:Name="btnPinned" Foreground="White" Style="{StaticResource PinAppBarButtonStyle}" Command="{Binding PinCommand}"/>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <Button Foreground="White" Style="{StaticResource AddAppBarButtonStyle}" AutomationProperties.Name="New" Command="{Binding NewCommand}" />
-                    <Button Foreground="White" Style="{StaticResource OpenFileAppBarButtonStyle}" Command="{Binding OpenCommand}" />
-                    <Button Foreground="White" Style="{StaticResource SaveAppBarButtonStyle}" Command="{Binding SaveCommand}" />
+                    <Button x:Name="btnNew" Foreground="White" Style="{StaticResource AddAppBarButtonStyle}" AutomationProperties.Name="New" Command="{Binding NewCommand}" />
+                    <Button x:Name="btnOpen" Foreground="White" Style="{StaticResource OpenFileAppBarButtonStyle}" Command="{Binding OpenCommand}" />
+                    <Button x:Name="btnSave" Foreground="White" Style="{StaticResource SaveAppBarButtonStyle}" Command="{Binding SaveCommand}" />
+                    <Button x:Name="btnClose" Foreground="White" Style="{StaticResource RemoveAppBarButtonStyle}" Command="{Binding CloseCommand}" />
                     <Button x:Name="btnDistraction" Foreground="White" AutomationProperties.Name="Distraction Free" Style="{StaticResource ClosePaneAppBarButtonStyle}" Click="DistractionToggled" />
                 </StackPanel>
             </Grid>
@@ -37,7 +37,7 @@
             <ColumnDefinition Width="40*" x:Name="colEditor"/>
             <ColumnDefinition Width="40*" x:Name="colPreview" />
         </Grid.ColumnDefinitions>
-        <Border x:Name="border1"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="55" Margin="0,7,0,0">
+        <Border x:Name="border1"  HorizontalAlignment="Left" VerticalAlignment="Top" Height="55" Margin="0,7,0,0" Grid.ColumnSpan="3">
             <Grid Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Width="250">
                 <Canvas x:Name="Layer_3" Height="245.516" Canvas.Left="11.742" Canvas.Top="5" Width="262.175">
                     <Path Data="F1M11.7417,250.5156L98.9997,165.5766C98.9997,165.5766,103.6247,165.5766,107.4997,161.1246C110.2627,157.9516,108.9997,154.5416,106.4997,152.6246C103.9997,150.7076,99.6247,150.1006,95.4997,153.4996C90.7887,157.3816,90.9997,162.3336,90.9997,162.3336 M11.7417,250.5156C11.7417,250.5156,38.1407,202.2916,52.6897,137.3446C52.6897,137.3446,120.4537,64.9996,238.9167,4.99960000000002L273.9167,4.99960000000002C273.9167,4.99960000000002,187.1207,109.5916,183.4847,185.9546C183.4847,185.9546,122.4227,205.2736,11.7417,250.5156" Fill="#FFBE0606" Height="34.185" Stretch="Fill" Width="36.61" UseLayoutRounding="False" Canvas.Left="26.508"/>
@@ -51,13 +51,11 @@
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="180" />
+                                <ColumnDefinition Width="190" />
                                 <ColumnDefinition Width="10" />
-                                <ColumnDefinition Width="15"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="{Binding Name}" TextTrimming="WordEllipsis" VerticalAlignment="Center" />
                             <TextBlock Grid.Column="1" Text="&#xE236;" Margin="0,-5,0,0" FontFamily="Segoe UI Symbol" Visibility="{Binding IsModified, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                            <Button Grid.Column="2" Command="{Binding ElementName=Documents, Path=DataContext.CloseCommand}" CommandParameter="{Binding }" Content="&#xE21C;" FontFamily="Segoe UI Symbol"  Margin="0,0,-10,0" Padding="0" Foreground="White" VerticalAlignment="Center"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -78,7 +76,7 @@
             <Button x:Name="btnEditor" BorderBrush="{x:Null}" Background="{x:Null}" Click="BtnEditorClicked" >
                 <TextBlock x:Name="tbEditor" Text="editor" Style="{StaticResource SubheaderTextStyle}" Margin="0,-13,0,0" />
             </Button>
-            
+
             <Button x:Name="btnPreview" BorderBrush="{x:Null}" Background="{x:Null}" Click="BtnPreviewClicked">
                 <TextBlock x:Name="tbPreview" Text="preview" Style="{StaticResource SubheaderTextStyle}" Margin="0,-13,0,0" />
             </Button>
@@ -120,13 +118,25 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnDistraction" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
                         </ObjectAnimationUsingKeyFrames>
-                        
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnOpen" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnSave" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnClose" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnNew" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                        </ObjectAnimationUsingKeyFrames>
+
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Editor">
-                        	<DiscreteObjectKeyFrame KeyTime="0">
-                        		<DiscreteObjectKeyFrame.Value>
-                        			<Thickness>0,90,0,0</Thickness>
-                        		</DiscreteObjectKeyFrame.Value>
-                        	</DiscreteObjectKeyFrame>
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Thickness>0,90,0,0</Thickness>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
                         </ObjectAnimationUsingKeyFrames>
 
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="root" Storyboard.TargetProperty="Background">
@@ -136,12 +146,13 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="tbEditor" Storyboard.TargetProperty="Foreground">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="#FFBE0606" />
                         </ObjectAnimationUsingKeyFrames>
+                        
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.ColumnSpan)" Storyboard.TargetName="border1">
-                        	<DiscreteObjectKeyFrame KeyTime="0">
-                        		<DiscreteObjectKeyFrame.Value>
-                        			<x:Int32>2</x:Int32>
-                        		</DiscreteObjectKeyFrame.Value>
-                        	</DiscreteObjectKeyFrame>
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <x:Int32>2</x:Int32>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
                         </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
@@ -163,14 +174,26 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnDistraction" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
                         </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="border">
-                        	<DiscreteObjectKeyFrame KeyTime="0">
-                        		<DiscreteObjectKeyFrame.Value>
-                                    <Thickness>0,90,0,0</Thickness>
-                        		</DiscreteObjectKeyFrame.Value>
-                        	</DiscreteObjectKeyFrame>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnOpen" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
                         </ObjectAnimationUsingKeyFrames>
-
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnSave" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnClose" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnNew" Storyboard.TargetProperty="Visibility">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                        </ObjectAnimationUsingKeyFrames>
+                        
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="border">
+                            <DiscreteObjectKeyFrame KeyTime="0">
+                                <DiscreteObjectKeyFrame.Value>
+                                    <Thickness>0,90,0,0</Thickness>
+                                </DiscreteObjectKeyFrame.Value>
+                            </DiscreteObjectKeyFrame>
+                        </ObjectAnimationUsingKeyFrames>
 
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="grdSnappedButtons" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />

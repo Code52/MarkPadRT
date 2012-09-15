@@ -39,8 +39,9 @@ namespace MarkPad.ViewModel
             OpenCommand = new RelayCommand(() => Open());
             NewCommand = new RelayCommand(New);
             SaveCommand = new RelayCommand(() => _source.Save(SelectedDocument));
-            CloseCommand = new RelayCommand<Document>(async d =>
+            CloseCommand = new RelayCommand(async () =>
                 {
+                    var d = SelectedDocument;
                     if (d.IsModified && await ShouldSave())
                         _source.Save(d);
 
