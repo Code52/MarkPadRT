@@ -34,7 +34,6 @@ namespace MarkPad.ViewModel
         public MainViewModel(SettingsViewModel settings)
         {
             Settings = settings;
-            Distraction = true;
             Documents = new ObservableCollection<Document>();
             OpenCommand = new RelayCommand(() => Open());
             NewCommand = new RelayCommand(New);
@@ -71,7 +70,7 @@ namespace MarkPad.ViewModel
             }
         }
 
-        public bool Distraction { get; set; }
+        public bool Distraction { get { return Settings.Distraction; } set { Settings.Distraction = value; } }
 
         public Document SelectedDocument
         {
@@ -205,7 +204,7 @@ namespace MarkPad.ViewModel
 
             try
             {
-                var secondaryTile = new SecondaryTile("AppSecondaryTile", d.Name, d.Name, tileActivationArguments, TileOptions.ShowNameOnLogo,  new Uri("ms-appx:///assets/Logo.png"));
+                var secondaryTile = new SecondaryTile("AppSecondaryTile", d.Name, d.Name, tileActivationArguments, TileOptions.ShowNameOnLogo, new Uri("ms-appx:///assets/Logo.png"));
                 secondaryTile.RequestCreateAsync();
             }
             catch (Exception o_0)

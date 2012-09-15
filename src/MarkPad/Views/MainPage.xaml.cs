@@ -45,6 +45,7 @@ namespace MarkPad.Views
 
             Messenger.Default.Register<HideWebviewMessage>(this, o => SwitchWebViewForWebViewBrush());
             Messenger.Default.Register<ShowWebViewMessage>(this, o => SwitchWebViewBrushForWebView());
+            Loaded += (s, e) => VisualStateManager.GoToState(this, ViewModel.Distraction ? "FullScreenLandscapeOrWide" : "DistractionFree", false);
         }
 
         protected override void OnKeyDown(KeyRoutedEventArgs e)

@@ -16,6 +16,7 @@ namespace MarkPad.ViewModel
         private const double DefaultFontSize = 16.0;
         private double _fontSize;
         private string _selectedFont;
+        private bool _distraction;
 
         public SettingsViewModel()
         {
@@ -41,6 +42,9 @@ namespace MarkPad.ViewModel
                 _localSettings.Values.Remove("FontSize");
                 SetDefaults();
             }
+
+            if (!_localSettings.Values.ContainsKey("Distraction"))
+                _localSettings.Values.Add("Distraction", true);
         }
 
         public ObservableCollection<string> Fonts { get; set; }
@@ -64,6 +68,20 @@ namespace MarkPad.ViewModel
                 _fontSize = value;
                 _localSettings.Values["FontSize"] = value;
                 RaisePropertyChanged(() => FontSize);
+            }
+        }
+
+        public bool Distraction
+        {
+            get
+            {
+                return (bool)_localSettings.Values["Distraction"];
+            }
+            set
+            {
+                _distraction = value;
+                _localSettings.Values["Distraction"] = value;
+                RaisePropertyChanged(() => Distraction);
             }
         }
 
