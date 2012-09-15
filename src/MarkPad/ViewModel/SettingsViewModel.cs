@@ -28,7 +28,7 @@ namespace MarkPad.ViewModel
             {
                 _localSettings.Values.Add("Font", DefaultFont);
             }
-            _fontSize = (double)_localSettings.Values["FontSize"];
+            _fontSize = (int)_localSettings.Values["FontSize"];
             _selectedFont = (string)_localSettings.Values["Font"];
         }
 
