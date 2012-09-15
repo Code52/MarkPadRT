@@ -1,61 +1,76 @@
+---
+
+---
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
+	<head>
+		<title>{{ site.title }}</title>
+		<link rel="shortcut icon" href="img/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="style.css" />
+		<style>
+			h1 { font-size: 3.5em; }
+			#code52 { color: #41b1e1; font-family: Segoe UI Light, Segoe WP Light, Segoe UI, Helvetica, sans-serif; }
+			#code52 a, #code52 a:visited { color: #41b1e1; text-decoration:none; }
+			#code52 a:hover { text-decoration:underline; }
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<div id="code52"><a href="http://www.code52.org">a code 52 project</a></div>
+			<h1>Markdown works <em>better</em> with MarkPad</h1>
+			<div id="tablet">
+				<img id="screenshot" src="img/tablet_3.png" />
+			</div>
+			<div id="content">
 
-  <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Markpad : " />
+				<div id="features">
+					<h2>features</h2>
+					<ul>
+						<li>free and open source</li>
+						<li>share rendered markdown via email</li>
+						<li>configure font and size for <em>your</em> perfect editor</li>
+					</ul>
+				</div>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+				<div id="features">
+					<h2>future features</h2>
+					<ul>
+						<li>Publish directly to GitHub</li>
+						<li>Publish directly to metaweblog API blogs!</li>
+						<li>custom CSS</li>
+					</ul>
+				</div>
+				<a class="blockbutton" href="http://apps.microsoft.com/webpdp/en-us/app/{{ site.appId }}">
+					<div class="blockbutton_icon"><img src="img/store.png" /></div>
+					<div class="blockbutton_text">download</div>
+				</a>
+			</div>
 
-    <title>Markpad</title>
-  </head>
+			<div id="clear">&nbsp</div>
 
-  <body>
+			<div class="feature">
+			</div>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/Code52/MarkPadRT">View on GitHub</a>
+			{% for post in site.posts %}
+			<div class="feature">
+				<div class="feature-image {% if post.align != "left" %}right{% else %}left{% endif %}"><img src="{{post.screenshot}}" /></div>
+				<div class="feature-text {% if post.align == "left" %}left{% else %}right{% endif %}">
+					<h3>{{ post.title }} </h3>
+					{{ post.content }}
+				</div>
+				<div class="clear"></div>
+			</div>
+				
+			{% endfor %}
 
-          <h1 id="project_title">Markpad</h1>
-          <h2 id="project_tagline"></h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/Code52/MarkPadRT/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/Code52/MarkPadRT/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>MarkPad</h1>
-
-<p><img src="http://code52.org/DownmarkerWPF/icon.png" alt=""></p>
-
-<p>Imagine, if you will a full bucket of awesomesauce</p>
-
-<p>Throw in a couple of amazeballs</p>
-
-<p>Mix it all up with the holy stick of Chairman Wow</p>
-
-<hr><p>Now you're somewhere close to the epic that <em>is</em> editing Markdown on WinRT.</p>
-
-<p>You download this now.</p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Markpad maintained by <a href="https://github.com/Code52">Code52</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
-  </body>
+			<img src="img/dropshadow_border_bottom.png" id="screenshotborderbottom" class="screenshotborder" />
+	
+			<h2>Got a problem?</h2>
+			Head over to <a href="https://github.com/Code52/MarkPadRT/issues">GitHub</a> and lodge an issue.
+			<br /><br /><br /><br /><br />
+		</div>
+	
+	</body>
 </html>

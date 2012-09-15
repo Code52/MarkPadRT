@@ -1,0 +1,7 @@
+permalink: /:title.html
+auto: true
+markdown: rdiscount
+title: MarkPad
+accent: BE0606
+accentLight: e40505
+appId : 123456
