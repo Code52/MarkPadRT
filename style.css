@@ -29,7 +29,6 @@ a img { border :none;}
 
 .feature { margin-bottom:50px;}
 .feature-image { width: 50%; box-sizing: border-box; }
-.feature-image img { width: 100%;}
 .feature-text { width:50%; box-sizing: border-box; }
 .feature-third { width: 33%; float:left; box-sizing:border-box; padding:5px;}
 .right { float:right;}
