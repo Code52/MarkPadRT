@@ -108,6 +108,18 @@ namespace MarkPad.ViewModel
 
             args.Request.ApplicationCommands.Add(cmd);
             args.Request.ApplicationCommands.Add(new SettingsCommand("help", "Markdown Help", x => ShowHelp()));
+            args.Request.ApplicationCommands.Add(new SettingsCommand("about", "About", x =>
+                {
+                    Messenger.Default.Send(new HideWebviewMessage());
+                    _flyout = new SettingsFlyout
+                    {
+                        HeaderText = "About",
+                        Content = new AboutView(),
+                        IsOpen = true,
+                    };
+
+                    _flyout.Closed += (s, e) => Messenger.Default.Send(new ShowWebViewMessage());
+                }));
         }
 
         private async Task ShowHelp()

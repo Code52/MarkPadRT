@@ -41,6 +41,16 @@ namespace MarkPad
                     throw new Exception("Failed to create initial page");
                 }
             }
+
+            if (args.Arguments != string.Empty)
+            {
+                //var locator = (ViewModelLocator)Resources["Locator"];
+
+                //var x = new LocalDocument(args.Arguments);
+                //x.Load();
+                //locator.Main.Open(x);
+            }
+
             Window.Current.Activate();
         }
 
@@ -66,7 +76,7 @@ namespace MarkPad
             if (rootFrame == null)
             {
                 rootFrame = new Frame();
-                rootFrame.Navigate(typeof (MainPage));
+                rootFrame.Navigate(typeof(MainPage));
                 Window.Current.Content = rootFrame;
             }
 

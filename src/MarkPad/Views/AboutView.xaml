@@ -1,0 +1,25 @@
+﻿<UserControl
+    x:Class="MarkPad.Views.AboutView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MarkPad.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="350">
+    
+    <Grid>
+    	<Image Source="/Assets/coloured_logo.png" HorizontalAlignment="Left" Margin="10,10,0,0" Width="75" Height="75" VerticalAlignment="Top"/>
+    	<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="MarkPad" VerticalAlignment="Top" Style="{StaticResource PageSubheaderTextStyle}" Margin="100,9,0,0"/>
+    	<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Margin="100,50,0,0" >
+			<Run Text="Version " /><Run Text="{Binding Version}" />
+		</TextBlock>
+    	<StackPanel Margin="10,102,10,45">
+    		<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource BaselineTextStyle}">
+    			<Run Text="MarkPad is free and open source software released under the Microsoft Permissive License (MS-PL)."/>
+    		</TextBlock>
+    		<HyperlinkButton NavigateUri="http://code52.org/MarkPadRT" FontWeight="Normal" VerticalAlignment="Top" Content="http://code52.org/MarkPadRT" HorizontalAlignment="Center" Margin="0,20,0,0" />
+    	</StackPanel>
+    </Grid>
+</UserControl>
