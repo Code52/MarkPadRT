@@ -22,6 +22,8 @@ namespace MarkPad.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
+        readonly ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings.CreateContainer("Settings", ApplicationDataCreateDisposition.Always);
+
         private const string Html = @"<html><head><style>body {{ background : #eaeaea; font-family: '{0}', sans-serif; font-size: {1}px; }}</style></head><body>{2}</body></html>";
         private readonly Markdown _markdown = new Markdown();
         private readonly LocalSource _source = new LocalSource();
@@ -163,6 +165,12 @@ namespace MarkPad.ViewModel
 
         private async Task Load()
         {
+            if (!_localSettings.Values.ContainsKey("HasRun"))
+            {
+                _localSettings.Values.Add("HasRun", true);
+                ShowHelp();
+            }
+
             foreach (Document d in await _source.Restore())
             {
                 Documents.Add(d);

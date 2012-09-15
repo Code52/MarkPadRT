@@ -5,13 +5,12 @@ using MarkPad.Core;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
-using Windows.UI.Popups;
 
 namespace MarkPad.Sources.LocalFiles
 {
     public class LocalSource : ISource
     {
-        readonly ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings;
+        readonly ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings.CreateContainer("LocalFiles", ApplicationDataCreateDisposition.Always);
 
         public async Task<bool> Login()
         {
