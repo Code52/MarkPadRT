@@ -433,11 +433,6 @@
         <Setter Property="AutomationProperties.Name" Value="Edit"/>
         <Setter Property="Content" Value="&#xE104;"/>
     </Style>
-    <Style x:Key="SaveAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
-        <Setter Property="AutomationProperties.AutomationId" Value="SaveAppBarButton"/>
-        <Setter Property="AutomationProperties.Name" Value="Save"/>
-        <Setter Property="Content" Value="&#xE105;"/>
-    </Style>
     <Style x:Key="DeleteAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="DeleteAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Delete"/>
@@ -452,11 +447,6 @@
         <Setter Property="AutomationProperties.AutomationId" Value="RemoveAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Remove"/>
         <Setter Property="Content" Value="&#xE108;"/>
-    </Style>
-    <Style x:Key="AddAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
-        <Setter Property="AutomationProperties.AutomationId" Value="AddAppBarButton"/>
-        <Setter Property="AutomationProperties.Name" Value="Add"/>
-        <Setter Property="Content" Value="&#xE109;"/>
     </Style>
     <Style x:Key="NoAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="NoAppBarButton"/>
@@ -603,6 +593,24 @@
     </Style>
 
     -->
+
+
+    <Style x:Key="AddAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
+        <Setter Property="AutomationProperties.AutomationId" Value="AddAppBarButton"/>
+        <Setter Property="AutomationProperties.Name" Value="Add"/>
+        <Setter Property="Content" Value="&#xE109;"/>
+    </Style>
+    <Style x:Key="OpenFileAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
+        <Setter Property="AutomationProperties.AutomationId" Value="OpenFileAppBarButton"/>
+        <Setter Property="AutomationProperties.Name" Value="Open"/>
+        <Setter Property="Content" Value="&#xE1A5;"/>
+    </Style>
+    <Style x:Key="SaveAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
+        <Setter Property="AutomationProperties.AutomationId" Value="SaveAppBarButton"/>
+        <Setter Property="AutomationProperties.Name" Value="Save"/>
+        <Setter Property="Content" Value="&#xE105;"/>
+    </Style>
+
     <Style x:Key="ClosePaneAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="ClosePaneAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Close Pane"/>
@@ -1188,11 +1196,6 @@
         <Setter Property="AutomationProperties.AutomationId" Value="ZoomOutAppBarButton"/>
         <Setter Property="AutomationProperties.Name" Value="Zoom Out"/>
         <Setter Property="Content" Value="&#xE1A4;"/>
-    </Style>
-    <Style x:Key="OpenFileAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
-        <Setter Property="AutomationProperties.AutomationId" Value="OpenFileAppBarButton"/>
-        <Setter Property="AutomationProperties.Name" Value="Open File"/>
-        <Setter Property="Content" Value="&#xE1A5;"/>
     </Style>
     <Style x:Key="OtherUserAppBarButtonStyle" TargetType="ButtonBase" BasedOn="{StaticResource AppBarButtonStyle}">
         <Setter Property="AutomationProperties.AutomationId" Value="OtherUserAppBarButton"/>
