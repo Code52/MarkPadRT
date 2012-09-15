@@ -101,9 +101,25 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HtmlType\AToXaml.cs" />
+    <Compile Include="HtmlType\BlockQuoteToXaml.cs" />
+    <Compile Include="HtmlType\BrToXaml.cs" />
+    <Compile Include="HtmlType\DefaultToXaml.cs" />
+    <Compile Include="HtmlType\DLToXaml.cs" />
     <Compile Include="Document.cs" />
+    <Compile Include="HtmlToRichTextBox.cs" />
+    <Compile Include="HtmlTypeBase.cs" />
+    <Compile Include="HtmlType\HToXaml.cs" />
+    <Compile Include="HtmlType\IHtmlType.cs" />
+    <Compile Include="HtmlType\ImageToXaml.cs" />
     <Compile Include="ISource.cs" />
+    <Compile Include="HtmlType\IToXaml.cs" />
+    <Compile Include="HtmlType\OLToXaml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RichTextboxStyle.cs" />
+    <Compile Include="HtmlType\StrongToXaml.cs" />
+    <Compile Include="HtmlType\TableToXaml.cs" />
+    <Compile Include="HtmlType\ULToXaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="GalaSoft.MvvmLight.Extras.Win8">
@@ -112,6 +128,9 @@
     <Reference Include="GalaSoft.MvvmLight.Win8, Version=4.0.23.35608, Culture=neutral, PublicKeyToken=7f0ea4153a3589fc, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MvvmLight.4.1.23.0\lib\winrt45\GalaSoft.MvvmLight.Win8.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\winrt45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\MvvmLight.4.1.23.0\lib\winrt45\Microsoft.Practices.ServiceLocation.dll</HintPath>

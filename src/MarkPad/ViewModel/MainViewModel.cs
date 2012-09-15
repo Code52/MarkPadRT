@@ -90,7 +90,7 @@ namespace MarkPad.ViewModel
 
         public string Transform()
         {
-            return string.Format(Html, Settings.SelectedFont, Settings.FontSize, _markdown.Transform(SelectedDocument.Text));
+            return _markdown.Transform(SelectedDocument.Text);// return string.Format(Html, Settings.SelectedFont, Settings.FontSize, _markdown.Transform(SelectedDocument.Text));
         }
 
         private void CommandsRequested(SettingsPane sender, SettingsPaneCommandsRequestedEventArgs args)

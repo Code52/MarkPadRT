@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using GalaSoft.MvvmLight.Messaging;
+using MarkPad.Core;
 using MarkPad.Messages;
 using MarkPad.ViewModel;
 using Windows.System;
@@ -115,7 +116,11 @@ namespace MarkPad.Views
         {
             _timer.Stop();
             if (ViewModel.SelectedDocument != null)
-                wv.NavigateToString(ViewModel.Transform());
+            {
+                var htb = new HtmlToRichTextBox(ViewModel.Transform());
+                htb.ApplyHtmlToRichTextBox(rtb);
+            }/*
+                wv.NavigateToString(ViewModel.Transform());*/
         }
 
         private void TextChanged(object sender, RoutedEventArgs e)
