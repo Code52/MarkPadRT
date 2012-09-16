@@ -17,7 +17,7 @@
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="btnBold" Foreground="White" Style="{StaticResource BoldAppBarButtonStyle}" Click="BoldClicked" />
                     <Button x:Name="btnItalic" Foreground="White" Style="{StaticResource ItalicAppBarButtonStyle}"  Click="ItalicClicked"/>
-                    <Button x:Name="btnLink" Foreground="White" Style="{StaticResource LinkAppBarButtonStyle}"/>
+                    <Button x:Name="btnLink" Foreground="White" Style="{StaticResource LinkAppBarButtonStyle}" Click="LinkClicked"/>
                     <Button x:Name="btnPinned" Foreground="White" Style="{StaticResource PinAppBarButtonStyle}" Command="{Binding PinCommand}" CommandParameter="{Binding SelectedDocument}"/>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
@@ -32,6 +32,11 @@
     </Common:LayoutAwarePage.BottomAppBar>
 
     <Grid x:Name="root"  Background="White" Style="{StaticResource LayoutRootStyle}">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition FromHorizontalOffset="350" />
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250" x:Name="colFiles" />
             <ColumnDefinition Width="40*" x:Name="colEditor"/>
@@ -47,6 +52,11 @@
         </Border>
         <Grid Grid.Column="0" Background="White" Margin="0,67,0,0">
             <ListBox x:Name="Documents" BorderBrush="{x:Null}" BorderThickness="0" ItemsSource="{Binding Documents}" SelectedItem="{Binding SelectedDocument, Mode=TwoWay}" Margin="18,0,0,0" SelectionChanged="DocumentsSelectionChanged">
+                <ListBox.ItemContainerTransitions>
+                    <TransitionCollection>
+                        <AddDeleteThemeTransition />
+                    </TransitionCollection>
+                </ListBox.ItemContainerTransitions>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -146,7 +156,7 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="tbEditor" Storyboard.TargetProperty="Foreground">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="#FFBE0606" />
                         </ObjectAnimationUsingKeyFrames>
-                        
+
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.ColumnSpan)" Storyboard.TargetName="border1">
                             <DiscreteObjectKeyFrame KeyTime="0">
                                 <DiscreteObjectKeyFrame.Value>
@@ -186,7 +196,7 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="btnNew" Storyboard.TargetProperty="Visibility">
                             <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
                         </ObjectAnimationUsingKeyFrames>
-                        
+
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="border">
                             <DiscreteObjectKeyFrame KeyTime="0">
                                 <DiscreteObjectKeyFrame.Value>

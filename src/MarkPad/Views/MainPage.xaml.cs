@@ -5,6 +5,7 @@ using GalaSoft.MvvmLight.Messaging;
 using MarkPad.Messages;
 using MarkPad.ViewModel;
 using Windows.System;
+using Windows.UI.Popups;
 using Windows.UI.Text;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -134,6 +135,12 @@ namespace MarkPad.Views
         private void DocumentsSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Editor.Document.SetText(TextSetOptions.None, ViewModel.SelectedDocument != null ? ViewModel.SelectedDocument.Text : string.Empty);
+        }
+
+        private void LinkClicked(object sender, RoutedEventArgs e)
+        {
+            var dialog = new LinkDialog();
+            dialog.ShowAsync();
         }
 
         private void BoldClicked(object sender, RoutedEventArgs e)
