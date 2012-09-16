@@ -136,6 +136,7 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <Content Include="Assets\coloured_logo.png" />
+    <Content Include="Assets\PinnedLogo.png" />
     <Content Include="Help.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

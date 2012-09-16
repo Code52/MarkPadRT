@@ -50,12 +50,20 @@ namespace MarkPad.ViewModel
                     if (Documents.Count == 0)
                         New();
                 });
-            PinCommand = new RelayCommand(() => PinDocument(SelectedDocument));
+            PinCommand = new RelayCommand<Document>(document => PinDocument(document), CanExecute);
             Load();
 
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
             dataTransferManager.DataRequested += ShareRequested;
             SettingsPane.GetForCurrentView().CommandsRequested += CommandsRequested;
+        }
+
+        private bool CanExecute(Document d)
+        {
+            if (d == null)
+                return false;
+
+            return ((LocalDocument)SelectedDocument).File != null;
         }
 
         public SettingsViewModel Settings { get; set; }
@@ -191,9 +199,12 @@ namespace MarkPad.ViewModel
 
         public async Task Open(Document d)
         {
-            if (Documents.Any(x => x.Name == d.Name && x.Id == d.Id))
+            var existing = Documents.FirstOrDefault(x => x.Name == d.Name && x.Id == d.Id);
+            if (existing != null)
+            {
+                SelectedDocument = existing;
                 return;
-
+            }
             Documents.Add(d);
             SelectedDocument = d;
         }
@@ -204,7 +215,8 @@ namespace MarkPad.ViewModel
 
             try
             {
-                var secondaryTile = new SecondaryTile("AppSecondaryTile", d.Name, d.Name, tileActivationArguments, TileOptions.ShowNameOnLogo, new Uri("ms-appx:///assets/Logo.png"));
+
+                var secondaryTile = new SecondaryTile(d.Name, d.Name, d.Name, tileActivationArguments, TileOptions.ShowNameOnLogo, new Uri("ms-appx:///assets/PinnedLogo.png"));
                 secondaryTile.RequestCreateAsync();
             }
             catch (Exception o_0)

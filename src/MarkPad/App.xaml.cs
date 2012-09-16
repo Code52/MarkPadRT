@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using MarkPad.Core;
 using MarkPad.Sources.LocalFiles;
 using MarkPad.ViewModel;
 using MarkPad.Views;
@@ -44,14 +46,18 @@ namespace MarkPad
 
             if (args.Arguments != string.Empty)
             {
-                //var locator = (ViewModelLocator)Resources["Locator"];
-
-                //var x = new LocalDocument(args.Arguments);
-                //x.Load();
-                //locator.Main.Open(x);
+                LoadFromPinned(args.Arguments);
             }
 
             Window.Current.Activate();
+        }
+
+        private async Task LoadFromPinned(string args)
+        {
+            var locator = (ViewModelLocator)Resources["Locator"];
+            var doc = await LocalDocument.FromPath(args);
+            doc.Token = args;
+            locator.Main.Open(doc);
         }
 
         private void OnSuspending(object sender, SuspendingEventArgs e)

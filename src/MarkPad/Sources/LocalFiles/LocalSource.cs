@@ -5,6 +5,7 @@ using MarkPad.Core;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
+using Windows.UI.StartScreen;
 
 namespace MarkPad.Sources.LocalFiles
 {
@@ -36,6 +37,7 @@ namespace MarkPad.Sources.LocalFiles
 
                 string token = StorageApplicationPermissions.FutureAccessList.Add(file, file.Name);
                 _localSettings.Values[file.Name] = token;
+                d.Token = token;
             }
 
             return docs;
@@ -47,7 +49,7 @@ namespace MarkPad.Sources.LocalFiles
             foreach (var f in _localSettings.Values)
             {
                 var file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync((string)f.Value);
-                var d = new LocalDocument(file);
+                var d = new LocalDocument(file) { Token = (string)f.Value };
                 await d.Load();
                 docs.Add(d);
             }
@@ -74,6 +76,7 @@ namespace MarkPad.Sources.LocalFiles
                 doc.File = file;
 
                 string token = StorageApplicationPermissions.FutureAccessList.Add(file, file.Name);
+                doc.Token = token;
                 _localSettings.Values[file.Name] = token;
             }
             else
@@ -87,7 +90,7 @@ namespace MarkPad.Sources.LocalFiles
             }
         }
 
-        public void Close(Document document)
+        public async Task Close(Document document)
         {
             try
             {
@@ -95,9 +98,18 @@ namespace MarkPad.Sources.LocalFiles
                 if (doc.File == null)
                     return;
 
-                var token = _localSettings.Values[doc.File.Name];
-                StorageApplicationPermissions.FutureAccessList.Remove((string)token);
+
+                var token = (string)_localSettings.Values[doc.File.Name];
                 _localSettings.Values.Remove(doc.File.Name);
+
+                var tiles = await SecondaryTile.FindAllAsync();
+                foreach (var t in tiles)
+                {
+                    if (t.Arguments == token)
+                        return;
+                }
+
+                StorageApplicationPermissions.FutureAccessList.Remove(token);
             }
             catch (Exception o_0)
             {

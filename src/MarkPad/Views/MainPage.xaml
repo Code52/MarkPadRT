@@ -18,7 +18,7 @@
                     <Button x:Name="btnBold" Foreground="White" Style="{StaticResource BoldAppBarButtonStyle}" Click="BoldClicked" />
                     <Button x:Name="btnItalic" Foreground="White" Style="{StaticResource ItalicAppBarButtonStyle}"  Click="ItalicClicked"/>
                     <Button x:Name="btnLink" Foreground="White" Style="{StaticResource LinkAppBarButtonStyle}"/>
-                    <Button x:Name="btnPinned" Foreground="White" Style="{StaticResource PinAppBarButtonStyle}" Command="{Binding PinCommand}"/>
+                    <Button x:Name="btnPinned" Foreground="White" Style="{StaticResource PinAppBarButtonStyle}" Command="{Binding PinCommand}" CommandParameter="{Binding SelectedDocument}"/>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                     <Button x:Name="btnNew" Foreground="White" Style="{StaticResource AddAppBarButtonStyle}" AutomationProperties.Name="New" Command="{Binding NewCommand}" />
