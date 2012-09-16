@@ -87,15 +87,13 @@
                 </Grid>
             </Border>
 
-
-
-            <StackPanel Orientation="Horizontal" Margin="0,56,0,0" Grid.ColumnSpan="3" x:Name="grdSnappedButtons" Visibility="Collapsed" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" x:Name="grdSnappedButtons" Visibility="Collapsed" VerticalAlignment="Top">
                 <Button x:Name="btnEditor" BorderBrush="{x:Null}" Background="{x:Null}" Click="BtnEditorClicked" >
-                    <TextBlock x:Name="tbEditor" Text="editor" Style="{StaticResource SubheaderTextStyle}" Margin="0,-13,0,0" />
+                    <TextBlock x:Name="tbEditor" Text="editor" Style="{StaticResource SubheaderTextStyle}" Margin="20,0,0,0" />
                 </Button>
 
                 <Button x:Name="btnPreview" BorderBrush="{x:Null}" Background="{x:Null}" Click="BtnPreviewClicked">
-                    <TextBlock x:Name="tbPreview" Text="preview" Style="{StaticResource SubheaderTextStyle}" Margin="0,-13,0,0" />
+                    <TextBlock x:Name="tbPreview" Text="preview" Style="{StaticResource SubheaderTextStyle}" />
                 </Button>
             </StackPanel>
 
@@ -156,7 +154,7 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="Editor">
                             <DiscreteObjectKeyFrame KeyTime="0">
                                 <DiscreteObjectKeyFrame.Value>
-                                    <Thickness>0,90,0,0</Thickness>
+                                    <Thickness>0,60,0,0</Thickness>
                                 </DiscreteObjectKeyFrame.Value>
                             </DiscreteObjectKeyFrame>
                         </ObjectAnimationUsingKeyFrames>
@@ -216,7 +214,7 @@
                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Margin)" Storyboard.TargetName="border">
                             <DiscreteObjectKeyFrame KeyTime="0">
                                 <DiscreteObjectKeyFrame.Value>
-                                    <Thickness>0,90,0,0</Thickness>
+                                    <Thickness>0,60,0,0</Thickness>
                                 </DiscreteObjectKeyFrame.Value>
                             </DiscreteObjectKeyFrame>
                         </ObjectAnimationUsingKeyFrames>
