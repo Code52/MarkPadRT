@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
 using GalaSoft.MvvmLight.Messaging;
 using MarkPad.Messages;
 using MarkPad.ViewModel;
 using Windows.System;
-using Windows.UI.Popups;
 using Windows.UI.Text;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -47,8 +44,20 @@ namespace MarkPad.Views
 
             Messenger.Default.Register<HideWebviewMessage>(this, o => SwitchWebViewForWebViewBrush());
             Messenger.Default.Register<ShowWebViewMessage>(this, o => SwitchWebViewBrushForWebView());
-            Loaded += (s, e) => VisualStateManager.GoToState(this, ViewModel.Distraction ? "FullScreenLandscapeOrWide" : "DistractionFree", false);
+            Loaded += (s, e) =>
+                          {
+                              Editor.AddHandler(RightTappedEvent, (RightTappedEventHandler)RichEditBox_Tapped, true);
+                              VisualStateManager.GoToState(this, ViewModel.Distraction ? "FullScreenLandscapeOrWide" : "DistractionFree", false);
+                          };
+
+
         }
+
+        private void RichEditBox_Tapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            BottomAppBar.IsOpen = true;
+        }
+
 
         protected override void OnKeyDown(KeyRoutedEventArgs e)
         {
@@ -59,7 +68,7 @@ namespace MarkPad.Views
                 return;
             }
 
-            if (!_isCtrlKeyPressed) 
+            if (!_isCtrlKeyPressed)
                 return;
 
             switch (e.Key)
@@ -146,7 +155,7 @@ namespace MarkPad.Views
             var dialog = new LinkDialog(selection);
             var viewModel = dialog.DataContext as LinkViewModel;
             dialog.Added = () => TransformText(s => string.Format("[{0}]({1})", viewModel.DisplayText, viewModel.LinkAddress));
-        
+
             dialog.ShowAsync();
         }
 
