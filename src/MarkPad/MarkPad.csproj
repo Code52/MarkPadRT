@@ -116,6 +116,7 @@
     <Compile Include="Sources\LocalFiles\LocalDocument.cs" />
     <Compile Include="Sources\LocalFiles\LocalSource.cs" />
     <Compile Include="Messages\HideWebviewMessage.cs" />
+    <Compile Include="ViewModel\LinkViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="Messages\ShowWebViewMessage.cs" />

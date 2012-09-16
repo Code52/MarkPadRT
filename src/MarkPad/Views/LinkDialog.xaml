@@ -13,12 +13,12 @@
             <StackPanel Width="400" HorizontalAlignment="Center">
                 <TextBlock Text="add a link" Style="{StaticResource PageSubheaderTextStyle}" Margin="0,15,0,15"/>
                 <TextBlock Text="Text to display" Style="{StaticResource BodyTextStyle}" Margin="0,0,0,5"/>
-                <TextBox Margin="0,0,0,10"/>
+                <TextBox Margin="0,0,0,10" Text="{Binding DisplayText, Mode=TwoWay}" />
                 <TextBlock Text="Address to link to"  Style="{StaticResource BodyTextStyle}" Margin="0,0,0,5"/>
-                <TextBox Margin="0,0,0,10"/>
+                <TextBox Margin="0,0,0,10" Text="{Binding LinkAddress, Mode=TwoWay}" />
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Right">
-                    <Button Content="Add" Margin="0,0,20,0"/>
-                    <Button Content="Cancel" />
+                    <Button Content="Add" Margin="0,0,20,0" Click="OnAdd" />
+                    <Button Content="Cancel" Click="OnCancel" />
                 </StackPanel>
             </StackPanel>
         </Grid>

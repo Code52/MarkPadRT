@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using GalaSoft.MvvmLight.Messaging;
 using MarkPad.Messages;
 using MarkPad.ViewModel;
@@ -139,7 +140,13 @@ namespace MarkPad.Views
 
         private void LinkClicked(object sender, RoutedEventArgs e)
         {
-            var dialog = new LinkDialog();
+            string selection;
+            Editor.Document.Selection.GetText(TextGetOptions.None, out selection);
+
+            var dialog = new LinkDialog(selection);
+            var viewModel = dialog.DataContext as LinkViewModel;
+            dialog.Added = () => TransformText(s => string.Format("[{0}]({1})", viewModel.DisplayText, viewModel.LinkAddress));
+        
             dialog.ShowAsync();
         }
 
