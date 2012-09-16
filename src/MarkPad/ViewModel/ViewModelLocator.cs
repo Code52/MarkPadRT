@@ -5,8 +5,10 @@ namespace MarkPad.ViewModel
 {
     public class ViewModelLocator
     {
+        public static ViewModelLocator Instance;
         public ViewModelLocator()
         {
+            Instance = this;
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();

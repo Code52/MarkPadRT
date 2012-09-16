@@ -21,7 +21,7 @@ namespace MarkPad.Sources.LocalFiles
         //Yes, this is really fugly, but issues with async stuff in the ctor
         public async Task Load()
         {
-            var t = await File.ReadAllTextAsync();
+            var t = await File.LoadAndRemoveBOM();
             OriginalText = t;
             Text = t;
         }
