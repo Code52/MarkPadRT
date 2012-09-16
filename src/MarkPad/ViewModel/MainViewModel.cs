@@ -40,6 +40,9 @@ namespace MarkPad.ViewModel
             SaveCommand = new RelayCommand(() => _source.Save(SelectedDocument));
             CloseCommand = new RelayCommand(async () =>
                 {
+                    if (SelectedDocument == null)
+                        return;
+
                     var d = SelectedDocument;
                     if (d.IsModified && await ShouldSave())
                         _source.Save(d);
@@ -49,6 +52,8 @@ namespace MarkPad.ViewModel
 
                     if (Documents.Count == 0)
                         New();
+                    else
+                        SelectedDocument = Documents.Last();
                 });
             PinCommand = new RelayCommand<Document>(document => PinDocument(document), CanExecute);
             Load();
