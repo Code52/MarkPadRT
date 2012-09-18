@@ -47,7 +47,10 @@ namespace MarkPad.Core
             get
             {
                 //This is ugly.
-                return Text.Trim('\r', '\n').Replace("\n", "") != OriginalText.Replace("\n", "");
+                var trimmedText = Text.Trim('\r', '\n').Replace("\n", "");
+                var trimmedOrig = OriginalText.Trim('\r', '\n').Replace("\n", "");
+
+                return trimmedText != trimmedOrig;
             }
         }
 
