@@ -135,6 +135,18 @@ namespace MarkPad.ViewModel
 
                     _flyout.Closed += (s, e) => Messenger.Default.Send(new ShowWebViewMessage());
                 }));
+            args.Request.ApplicationCommands.Add(new SettingsCommand("privacy", "Privacy", x =>
+            {
+                Messenger.Default.Send(new HideWebviewMessage());
+                _flyout = new SettingsFlyout
+                {
+                    HeaderText = "Privacy",
+                    Content = new PrivacyView(),
+                    IsOpen = true,
+                };
+
+                _flyout.Closed += (s, e) => Messenger.Default.Send(new ShowWebViewMessage());
+            }));
         }
 
         private async Task ShowHelp()
