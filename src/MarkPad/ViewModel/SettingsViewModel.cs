@@ -75,7 +75,7 @@ namespace MarkPad.ViewModel
         {
             get
             {
-                return (bool)_localSettings.Values["Distraction"];
+                return _distraction;
             }
             set
             {
