@@ -21,7 +21,7 @@ a img { border :none;}
 #clear { clear:both; }
 #screenshot { width: 100%;}
 
-.blockbutton { line-height:3em; display:inline-block; height:50px; width:300px; color:white;  background-color: #{{ site.accent }}; }
+.blockbutton , .blockbutton:visited{ line-height:3em; display:inline-block; height:50px; width:300px; color:white;  background-color: #{{ site.accent }}; }
 .blockbutton:hover { background-color: #{{site.accentLight}}; }
 .blockbutton_icon {margin-left:15px; display:inline; margin-bottom:-5px; } 
 .blockbutton_icon img { margin-bottom:-15px;}
