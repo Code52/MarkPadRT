@@ -135,7 +135,7 @@ namespace MarkPad.Views
             if (ViewModel.SelectedDocument != null)
             {
                 string foo;
-                Editor.Document.GetText(TextGetOptions.None, out foo);
+                Editor.Document.GetText(TextGetOptions.UseCrlf, out foo);
                 ViewModel.SelectedDocument.Text = foo;
             }
             _timer.Stop();
