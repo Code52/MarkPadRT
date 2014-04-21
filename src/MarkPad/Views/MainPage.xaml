@@ -75,7 +75,7 @@
         <RichEditBox x:Name="Editor" Grid.Column="1" FontFamily="{Binding Settings.SelectedFont}" FontSize="{Binding ElementName=Editor, Path=DataContext.Settings.FontSize}" Background="#f9f9f9" BorderThickness="0" BorderBrush="{x:Null}" Padding="25, 25, 25, 0" KeyDown="EditorKeyDown" TextChanged="TextChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" AcceptsReturn="True"  />
         <Border x:Name="border" Background="#eaeaea" Grid.Column="2" >
             <Grid  Margin="15,15,15,0">
-                <WebView x:Name="wv" IsHitTestVisible="False" />
+				<WebView x:Name="wv" IsHitTestVisible="False" ScriptNotify="Wv_OnScriptNotify" />
                 <Rectangle x:Name="webRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" />
             </Grid>
         </Border>
