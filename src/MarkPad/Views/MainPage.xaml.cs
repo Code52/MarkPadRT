@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using GalaSoft.MvvmLight.Messaging;
 using MarkPad.Messages;
 using MarkPad.ViewModel;
@@ -50,8 +51,6 @@ namespace MarkPad.Views
 							  Editor.AddHandler(RightTappedEvent, (RightTappedEventHandler)RichEditBox_Tapped, true);
 							  VisualStateManager.GoToState(this, ViewModel.Distraction ? "FullScreenLandscapeOrWide" : "DistractionFree", false);
 						  };
-
-
 		}
 
 		private void RichEditBox_Tapped(object sender, RightTappedRoutedEventArgs e)
@@ -128,7 +127,7 @@ namespace MarkPad.Views
 		{
 			_timer.Stop();
 			if (ViewModel.SelectedDocument != null)
-				wv.NavigateToString(ViewModel.Transform());
+				wv.NavigateToString(ViewModel.Transform(true));
 		}
 
 		private void TextChanged(object sender, RoutedEventArgs e)
@@ -249,10 +248,31 @@ namespace MarkPad.Views
 			e.Handled = true;
 		}
 
+		/// <summary>
+		/// Invoke script from webview
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private async void Wv_OnScriptNotify(object sender, NotifyEventArgs e)
 		{
-			await Windows.System.Launcher.LaunchUriAsync(new Uri(e.Value));
-
+			try
+			{
+				// invoke IE.
+				string data = e.Value;
+				const string urlPrefix = "url:";
+				if (data.ToUpper().StartsWith(urlPrefix.ToUpper()))
+				{
+					// if it is not a valid url type, add http prefix.
+					var url = data.Substring(urlPrefix.Length);
+					if (!Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute) || !url.Contains("://"))
+						url = "http://" + url;
+					await Launcher.LaunchUriAsync(new Uri(url, UriKind.RelativeOrAbsolute));
+				}
+			}
+			catch (Exception)
+			{
+				// Could not build a proper Uri. Abandon.
+			}
 		}
 	}
 }
