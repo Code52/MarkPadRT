@@ -124,6 +124,7 @@
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CollapsedAppBar.cs" />
     <Compile Include="Views\IDialog.cs" />
     <Compile Include="Views\InputDialog.cs" />
     <Compile Include="Views\LinkDialog.xaml.cs">

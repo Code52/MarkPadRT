@@ -699,8 +699,8 @@
             DEFAULT COMMON CONTROL COLORS
             ******************************************************************
             -->
-      <SolidColorBrush x:Key="AppBarBackgroundThemeBrush" Color="#FFFFFFFF" />
-      <SolidColorBrush x:Key="AppBarBorderThemeBrush" Color="#FFFFFFFF" />
+      <SolidColorBrush x:Key="AppBarBackgroundThemeBrush" Color="#494949" />
+      <SolidColorBrush x:Key="AppBarBorderThemeBrush" Color="#494949" />
       <SolidColorBrush x:Key="AppBarItemBackgroundThemeBrush" Color="Transparent" />
       <SolidColorBrush x:Key="AppBarItemDisabledForegroundThemeBrush" Color="#66000000" />
       <SolidColorBrush x:Key="AppBarItemForegroundThemeBrush" Color="#FF000000" />
