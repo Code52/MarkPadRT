@@ -4,15 +4,50 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:Common="using:MarkPad.Common" mc:Ignorable="d"
+    xmlns:Common="using:MarkPad.Common"
+    xmlns:views="using:MarkPad.Views"
+    mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator}, Path=Main}">
 
     <Common:LayoutAwarePage.Resources>
         <Common:BooleanToVisibilityConverter  x:Key="BooleanToVisibilityConverter" />
-    </Common:LayoutAwarePage.Resources>
+		<Style TargetType="views:CollapsedAppBar">
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="views:CollapsedAppBar">
+						<Grid Height="15" Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+							<VisualStateManager.VisualStateGroups>
+								<VisualStateGroup x:Name="Pointer">
+									<VisualState x:Name="Normal"/>
+									<VisualState x:Name="PointerOver">
+										<Storyboard>
+											<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="border">
+												<DiscreteObjectKeyFrame KeyTime="0">
+													<DiscreteObjectKeyFrame.Value>
+														<Visibility>Visible</Visibility>
+													</DiscreteObjectKeyFrame.Value>
+												</DiscreteObjectKeyFrame>
+											</ObjectAnimationUsingKeyFrames>
+										</Storyboard>
+									</VisualState>
+								</VisualStateGroup>
+							</VisualStateManager.VisualStateGroups>
+							<StackPanel Orientation="Horizontal" Margin="0, 0, 60, 0" HorizontalAlignment="Right">
+								<Ellipse Fill="#FFFFFFFF" Stroke="#FFFFFFFF" Width="5" Height="5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0, 0, 5, 0" />
+								<Ellipse Fill="#FFFFFFFF" Stroke="#FFFFFFFF" Width="5" Height="5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0, 0, 5, 0" />
+								<Ellipse Fill="#FFFFFFFF" Stroke="#FFFFFFFF" Width="5" Height="5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0, 0, 5, 0" />
+							</StackPanel>
+
+							<Border x:Name="border" Background="#77FFFFFF" Visibility="Collapsed" />
+						</Grid>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Common:LayoutAwarePage.Resources>
 
     <Common:LayoutAwarePage.BottomAppBar>
-        <AppBar  Background="#494949">
+        <AppBar>
             <Grid>
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="btnBold" Foreground="White" Style="{StaticResource BoldAppBarButtonStyle}" Click="BoldClicked" />
@@ -74,13 +109,11 @@
 
         <RichEditBox x:Name="Editor" Grid.Column="1" FontFamily="{Binding Settings.SelectedFont}" FontSize="{Binding ElementName=Editor, Path=DataContext.Settings.FontSize}" Background="#f9f9f9" BorderThickness="0" BorderBrush="{x:Null}" Padding="25, 25, 25, 0" KeyDown="EditorKeyDown" TextChanged="TextChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled" AcceptsReturn="True"  />
         <Border x:Name="border" Background="#eaeaea" Grid.Column="2" >
-            <Grid  Margin="15,15,15,0">
-				<WebView x:Name="wv" IsHitTestVisible="False" ScriptNotify="Wv_OnScriptNotify" />
-                <Rectangle x:Name="webRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2" />
+            <Grid  Margin="15,15,15,15">
+                <WebView x:Name="wv" IsHitTestVisible="False" ScriptNotify="Wv_OnScriptNotify" />
+                <Rectangle x:Name="webRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
             </Grid>
         </Border>
-
-
 
         <StackPanel Orientation="Horizontal" Margin="0,56,0,0" Grid.ColumnSpan="3" x:Name="grdSnappedButtons" Visibility="Collapsed" VerticalAlignment="Top">
             <Button x:Name="btnEditor" BorderBrush="{x:Null}" Background="{x:Null}" Click="BtnEditorClicked" >
@@ -91,6 +124,8 @@
                 <TextBlock x:Name="tbPreview" Text="preview" Style="{StaticResource SubheaderTextStyle}" Margin="0,-13,0,0" />
             </Button>
         </StackPanel>
+
+        <views:CollapsedAppBar Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="{StaticResource AppBarBackgroundThemeBrush}" />
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="ApplicationViewStates">

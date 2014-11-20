@@ -18,6 +18,7 @@ namespace MarkPad
         public App()
         {
             InitializeComponent();
+            App.Current.RequestedTheme = ApplicationTheme.Light;
             Suspending += OnSuspending;
         }
 
