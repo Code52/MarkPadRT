@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
+  <Identity Name="77e1f03a-2e14-478c-b21b-8879b2177ca3" Publisher="CN=Paul" Version="0.1.0.1" />
+  <Properties>
+    <DisplayName>MarkPad</DisplayName>
+    <PublisherDisplayName>Paul</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.2.1</OSMinVersion>
+    <OSMaxVersionTested>6.2.1</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="MarkPad.App">
+      <VisualElements DisplayName="MarkPad" Logo="Assets\Logo.png" SmallLogo="Assets\SmallLogo.png" Description="MarkPad is an editor for Markdown - a widely used syntax for formatting plain text to convert to blogs, comments, and in other places like on Stack Overflow." ForegroundText="light" BackgroundColor="#BE0606">
+        <DefaultTile ShowName="allLogos" />
+        <SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#BE0606" />
+        <InitialRotationPreference>
+          <Rotation Preference="landscape" />
+          <Rotation Preference="landscapeFlipped" />
+        </InitialRotationPreference>
+      </VisualElements>
+      <Extensions>
+        <Extension Category="windows.fileTypeAssociation" EntryPoint="MarkPad.App">
+          <FileTypeAssociation Name="md">
+            <Logo>icon.png</Logo>
+            <EditFlags OpenIsSafe="true" />
+            <SupportedFileTypes>
+              <FileType>.md</FileType>
+              <FileType>.markdown</FileType>
+              <FileType>.mkd</FileType>
+              <FileType>.mdown</FileType>
+            </SupportedFileTypes>
+          </FileTypeAssociation>
+        </Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>
