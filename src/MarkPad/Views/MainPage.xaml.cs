@@ -35,7 +35,6 @@ namespace MarkPad.Views
 					webRectangle.Visibility = Visibility.Collapsed;
 
 				};
-			wv.AllowedScriptNotifyUris = WebView.AnyScriptNotifyUri;
 			wv.LoadCompleted += wv_LoadCompleted;
 			BottomAppBar.Opened += (s, e) => SwitchWebViewForWebViewBrush();
 			BottomAppBar.Closed += (s, e) => SwitchWebViewBrushForWebView();

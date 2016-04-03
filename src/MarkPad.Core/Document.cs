@@ -1,8 +1,10 @@
-using GalaSoft.MvvmLight;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using MarkPad.Core.Annotations;
 
 namespace MarkPad.Core
 {
-    public abstract class Document : ViewModelBase
+	public abstract class Document : INotifyPropertyChanged
     {
         private string _text;
         private string _name;
@@ -14,8 +16,8 @@ namespace MarkPad.Core
             set
             {
                 _text = value;
-                RaisePropertyChanged(() => Text);
-                RaisePropertyChanged(() => IsModified);
+                OnPropertyChanged(Text);
+                OnPropertyChanged("IsModified");
             }
         }
 
@@ -25,7 +27,7 @@ namespace MarkPad.Core
             set
             {
                 _name = value;
-                RaisePropertyChanged(() => Name);
+                OnPropertyChanged();
             }
         }
 
@@ -37,7 +39,7 @@ namespace MarkPad.Core
             set
             {
                 _originalText = value;
-                RaisePropertyChanged(() => IsModified);
+				OnPropertyChanged("IsModified");
             }
         }
 
@@ -65,5 +67,14 @@ namespace MarkPad.Core
             Text = originalText;
             Name = fileName;
         }
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		[NotifyPropertyChangedInvocator]
+		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChangedEventHandler handler = PropertyChanged;
+			if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+		}
     }
 }

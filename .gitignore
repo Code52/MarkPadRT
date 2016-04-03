@@ -39,6 +39,7 @@ Ankh.NoLoad
 _ReSharper*/
 *.resharper
 [Tt]est[Rr]esult*
+*.DotSettings
 
 #Project files
 [Bb]uild/
@@ -58,3 +59,6 @@ packages/
 
 # visual studio database projects
 *.dbmdl
+
+#JustMock
+*.jmconfig
