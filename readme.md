@@ -1,4 +1,4 @@
-#MarkPad
+# MarkPad
 ![](http://code52.org/DownmarkerWPF/icon.png)
 
 Imagine, if you will a full bucket of awesomesauce
